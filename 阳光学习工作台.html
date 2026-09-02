@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title> sunny ☀ 阳光学习工作台</title>
+<style>
+  :root{
+    --sun:#ffb703; --sun2:#ffd166; --sky:#8ecae6; --sky2:#bde0fe;
+    --pink:#ff8fab; --mint:#8bd450; --mint2:#c7f464; --grape:#a78bfa;
+    --ink:#3a3550; --ink-soft:#6b6485; --card:#ffffff; --bg:#fdf6ec;
+    --r:22px; --shadow:0 6px 0 rgba(58,53,80,.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    background:var(--bg); color:var(--ink); min-height:100vh;
+    background-image:radial-gradient(circle at 10% 20%, #ffe9c2 0, transparent 25%),
+                     radial-gradient(circle at 90% 80%, #d8f3ff 0, transparent 25%),
+                     radial-gradient(circle at 80% 10%, #ffe3ee 0, transparent 20%);
+    background-attachment:fixed;
+  }
+  /* ---------- 顶部 ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:linear-gradient(120deg,#ffca3a,#ff9f1c 55%,#8ecae6 160%);
+    padding:12px 18px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    box-shadow:0 4px 14px rgba(255,159,28,.35);
+  }
+  .logo{font-size:34px; filter:drop-shadow(0 2px 0 rgba(0,0,0,.08));}
+  .title{color:#fff; font-weight:800; font-size:20px; letter-spacing:1px;
+    text-shadow:0 2px 0 rgba(0,0,0,.12); white-space:nowrap;}
+  .header-right{margin-left:auto; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .name-pill{
+    display:flex; align-items:center; gap:6px; background:rgba(255,255,255,.92);
+    border-radius:999px; padding:7px 14px; font-weight:700; font-size:16px;
+    border:2.5px dashed #fff; box-shadow:var(--shadow);
+  }
+  .name-pill input{
+    border:none; outline:none; font:inherit; color:var(--ink); width:96px;
+    background:transparent; text-align:center;
+  }
+  .points-pill{
+    display:flex; align-items:center; gap:6px; background:#fff;
+    border-radius:999px; padding:7px 16px; font-weight:800; font-size:17px;
+    box-shadow:var(--shadow); border:2.5px solid #ffd166;
+  }
+  .points-pill .num{color:#f77f00; font-size:20px; min-width:34px; text-align:right;}
+  .points-pill.bump{animation:bump .45s ease;}
+  @keyframes bump{30%{transform:scale(1.18) rotate(-2deg);}}
+  nav.tabs{width:100%; display:flex; gap:8px; margin-top:4px;}
+  nav.tabs button{
+    flex:1; max-width:180px; border:none; cursor:pointer; font:inherit; font-weight:700;
+    padding:8px 6px; border-radius:14px; background:rgba(255,255,255,.55); color:#5c4a12;
+    font-size:15px; transition:.15s; border:2px solid transparent;
+  }
+  nav.tabs button.on{background:#fff; color:#f77f00; border-color:#ffd166; box-shadow:var(--shadow);}
+  /* ---------- 布局 ---------- */
+  .layout{display:flex; gap:18px; max-width:1120px; margin:0 auto; padding:18px 16px 60px;}
+  aside{
+    width:170px; flex-shrink:0; position:sticky; top:118px; align-self:flex-start;
+    display:flex; flex-direction:column; gap:9px;
+  }
+  aside h3{font-size:13px; color:var(--ink-soft); padding-left:6px; margin-bottom:2px;}
+  .subj{
+    display:flex; align-items:center; gap:9px; background:var(--card);
+    border-radius:16px; padding:9px 11px; cursor:pointer; font-weight:700; font-size:15px;
+    border:2.5px solid transparent; box-shadow:var(--shadow); transition:.15s; text-align:left;
+  }
+  .subj .ic{font-size:22px; width:26px; text-align:center; flex-shrink:0;}
+  .subj .prog{font-size:11px; color:var(--ink-soft); font-weight:600; margin-left:auto; white-space:nowrap;}
+  .subj.on{border-color:var(--sun); background:#fff8e1; transform:translateX(4px);}
+  main{flex:1; min-width:0;}
+  .legend{text-align:center; font-size:12.5px; color:var(--ink-soft); background:#fff8e1;
+    border-radius:14px; padding:7px 12px; margin:-6px 0 16px; border:2px dashed #ffd166;}
+  .legend b{color:#c77700;}
+  /* ---------- 打卡卡 ---------- */
+  .checkin-card{
+    background:linear-gradient(120deg,#8ecae6,#bde0fe 60%,#c7f464 150%);
+    border-radius:var(--r); padding:18px 22px; display:flex; align-items:center; gap:16px;
+    flex-wrap:wrap; margin-bottom:20px; box-shadow:var(--shadow);
+    border:3px solid #fff;
+  }
+  .checkin-card .sun-big{font-size:46px; animation:spin 14s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .checkin-info{flex:1; min-width:160px;}
+  .checkin-info h2{font-size:19px; color:#1d4e6b;}
+  .checkin-info p{font-size:13px; color:#33698a; margin-top:3px;}
+  .streak{display:inline-flex; align-items:center; gap:4px; background:#fff; border-radius:999px;
+    padding:4px 12px; font-weight:800; color:#e85d04; font-size:14px; margin-top:7px;}
+  .btn{
+    border:none; cursor:pointer; font:inherit; font-weight:800; border-radius:999px;
+    padding:12px 24px; font-size:16px; transition:.15s; box-shadow:var(--shadow);
+  }
+  .btn:active{transform:translateY(3px); box-shadow:0 2px 0 rgba(58,53,80,.08);}
+  .btn-sun{background:linear-gradient(120deg,#ffd166,#ff9f1c); color:#fff;
+    text-shadow:0 1px 0 rgba(0,0,0,.15); font-size:18px;}
+  .btn-sun:disabled{filter:grayscale(.7); opacity:.8; cursor:default;}
+  /* ---------- 单元卡 ---------- */
+  .unit{
+    background:var(--card); border-radius:var(--r); margin-bottom:16px;
+    box-shadow:var(--shadow); overflow:hidden; border:2.5px solid transparent;
+  }
+  .unit.done{border-color:#8bd450;}
+  .unit-head{
+    display:flex; align-items:center; gap:10px; padding:13px 18px;
+    font-weight:800; font-size:16px; cursor:pointer; user-select:none;
+  }
+  .unit-head .badge{
+    background:#fff3cd; color:#c77700; border-radius:999px; font-size:12px;
+    padding:3px 10px; font-weight:800; flex-shrink:0;
+  }
+  .unit.done .unit-head .badge{background:#e5f9d0; color:#4a8b1f;}
+  .unit-head .arrow{margin-left:auto; font-size:12px; color:var(--ink-soft); transition:.2s;}
+  .unit.open .arrow{transform:rotate(180deg);}
+  .tasks{display:none; padding:2px 16px 14px;}
+  .unit.open .tasks{display:block;}
+  .task{
+    display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:16px;
+    cursor:pointer; transition:.12s; border:2px dashed #eee4d2; margin-bottom:8px;
+  }
+  .task:hover{background:#fffaf0;}
+  .task .box{
+    width:30px; height:30px; border-radius:10px; border:3px solid #d9cfb8; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:17px; background:#fff;
+    transition:.15s;
+  }
+  .task.done .box{background:#8bd450; border-color:#8bd450; color:#fff; animation:pop .3s ease;}
+  @keyframes pop{40%{transform:scale(1.3);}}
+  .task .txt{font-size:15px; font-weight:600; line-height:1.45; flex:1;}
+  .task.done .txt{color:#a39d8e; text-decoration:line-through; text-decoration-color:#ff8fab;}
+  .task .coin{font-size:13px; font-weight:800; color:#f77f00; white-space:nowrap; flex-shrink:0;}
+  .task.done .coin{visibility:hidden;}
+  .task .mini{width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:800; cursor:pointer; flex-shrink:0; border:2px solid; margin-left:2px;}
+  .task .mini.edit{background:#e7f5ff; color:#1d6fa5; border-color:#b3d9f2;}
+  .task .mini.del{background:#ffe3ee; color:#c9184a; border-color:#ffc2d4;}
+  .add-task{width:100%; padding:9px; font-size:14px; margin-top:2px;}
+  /* ---------- 商店 ---------- */
+  .shop-note{
+    background:#fff3f6; border:2.5px dashed var(--pink); border-radius:var(--r);
+    padding:14px 18px; font-size:14px; color:#a3405e; line-height:1.7; margin-bottom:18px;
+  }
+  .shop-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:16px;}
+  .goods{
+    background:var(--card); border-radius:var(--r); padding:22px 16px 16px; text-align:center;
+    box-shadow:var(--shadow); border:3px solid #ffe3ee; position:relative; transition:.15s;
+  }
+  .goods .gic{font-size:52px; line-height:1;}
+  .goods h3{margin:10px 0 4px; font-size:17px;}
+  .goods .cost{font-weight:800; color:#f77f00; font-size:15px; margin-bottom:12px;}
+  .goods .cost::before{content:"☀ ";}
+  .btn-buy{background:linear-gradient(120deg,#ff8fab,#f72585); color:#fff; font-size:15px; padding:10px 22px;}
+  .btn-buy:disabled{filter:grayscale(.75); opacity:.75; cursor:not-allowed;}
+  .g-ops{position:absolute; top:8px; right:8px; display:flex; gap:5px;}
+  .g-ops .mini{width:26px; height:26px; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-size:12px; font-weight:800; cursor:pointer; border:2px solid;
+    background:#fff; flex-shrink:0;}
+  .g-ops .mini.edit{background:#e7f5ff; color:#1d6fa5; border-color:#b3d9f2;}
+  .g-ops .mini.del{background:#ffe3ee; color:#c9184a; border-color:#ffc2d4;}
+  .icon-row{display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
+    max-height:118px; overflow-y:auto; margin-bottom:14px; padding:2px;}
+  .icon-chip{width:44px; height:44px; border-radius:14px; background:#fff7ea;
+    border:3px solid #ffe3c4; font-size:24px; line-height:1; display:flex; align-items:center;
+    justify-content:center; cursor:pointer; flex-shrink:0; transition:.12s;}
+  .icon-chip.on{border-color:#f77f00; background:#fff0d6; transform:scale(1.12);}
+  .ledger{margin-top:26px;}
+  .ledger h3{font-size:16px; margin-bottom:10px; display:flex; align-items:center; gap:6px;}
+  .ledger table{width:100%; border-collapse:collapse; background:#fff; border-radius:var(--r);
+    overflow:hidden; box-shadow:var(--shadow); font-size:14px;}
+  .ledger th{background:#ffe9c2; padding:10px 12px; text-align:left; font-size:13px;}
+  .ledger td{padding:10px 12px; border-top:2px solid #fdf3e0;}
+  .ledger tr.use td{color:#a39d8e;}
+  .ledger .earn{color:#4a8b1f; font-weight:800;}
+  .ledger .spend{color:#e85d04; font-weight:800;}
+  .empty{padding:26px; text-align:center; color:var(--ink-soft); font-size:14px;}
+  /* ---------- 数据 ---------- */
+  .data-card{
+    background:var(--card); border-radius:var(--r); padding:20px 22px; box-shadow:var(--shadow);
+    margin-bottom:16px;
+  }
+  .data-card h3{font-size:17px; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+  .data-card p{font-size:14px; color:var(--ink-soft); line-height:1.7; margin-bottom:12px;}
+  .btn-line{display:flex; gap:10px; flex-wrap:wrap;}
+  .btn-ghost{background:#fff; border:2.5px solid var(--sky); color:#1d6fa5;}
+  .btn-warn{background:#fff; border:2.5px solid #ff8fab; color:#c9184a;}
+  .stat-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:12px; margin-bottom:6px;}
+  .stat{background:#fff; border-radius:18px; padding:14px; text-align:center; box-shadow:var(--shadow);}
+  .stat .big{font-size:24px; font-weight:800; color:#f77f00;}
+  .stat .lbl{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  /* ---------- 弹层 ---------- */
+  .toast{
+    position:fixed; left:50%; top:90px; transform:translateX(-50%) translateY(-20px);
+    background:#3a3550; color:#fff; font-weight:700; padding:12px 22px; border-radius:999px;
+    font-size:15px; opacity:0; pointer-events:none; transition:.3s; z-index:200;
+    box-shadow:0 8px 20px rgba(0,0,0,.25); white-space:nowrap;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  .modal-mask{position:fixed; inset:0; background:rgba(58,53,80,.45); z-index:150;
+    display:none; align-items:center; justify-content:center; padding:20px;}
+  .modal-mask.show{display:flex;}
+  .modal{
+    background:#fff; border-radius:26px; padding:28px 26px 22px; max-width:340px; width:100%;
+    text-align:center; box-shadow:0 20px 50px rgba(0,0,0,.25); animation:pop .25s ease;
+  }
+  .modal .m-ic{font-size:52px;}
+  .modal h3{margin:10px 0 6px; font-size:19px;}
+  .modal p{font-size:14px; color:var(--ink-soft); line-height:1.7; margin-bottom:18px;}
+  .modal .row{display:flex; gap:10px; justify-content:center;}
+  footer{text-align:center; font-size:12px; color:var(--ink-soft); padding:0 16px 26px; line-height:1.8;}
+  @media (max-width:820px){
+    aside{width:100%; position:static; flex-direction:row; flex-wrap:wrap;}
+    aside h3{width:100%;}
+    .subj{font-size:13px; padding:7px 10px; gap:6px;}
+    .subj .prog{display:none;}
+    .layout{flex-direction:column; gap:12px;}
+    nav.tabs button{font-size:13px; padding:7px 4px;}
+    header{padding:10px 12px;}
+    .title{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🌈</div>
+  <div class="title">阳光学习工作台</div>
+  <div class="header-right">
+    <div class="name-pill">🧒<input id="nameInput" maxlength="8" title="点击修改名字"></div>
+    <div class="points-pill" id="pointsPill">☀️<span class="num" id="pointsNum">0</span><span style="font-size:13px;color:#a39d8e;">阳光</span></div>
+  </div>
+  <nav class="tabs">
+    <button class="on" data-tab="study">📚 学习任务</button>
+    <button data-tab="shop">🎁 阳光商店</button>
+    <button data-tab="data">💾 我的成长档案</button>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside id="sidebar"><h3>📚 学科导航</h3></aside>
+
+  <!-- 学习任务 -->
+  <main id="tab-study">
+    <div class="checkin-card">
+      <div class="sun-big">☀️</div>
+      <div class="checkin-info">
+        <h2 id="greet">你好呀，小朋友！</h2>
+        <p>每天完成学习后来打卡，攒够阳光去商店换奖励～</p>
+        <div class="streak">🔥 连续打卡 <span id="streakNum">0</span> 天</div>
+      </div>
+      <button class="btn btn-sun" id="btnCheckin">打卡 +20 ☀️</button>
+    </div>
+    <div class="legend">👆 点任务文字＝勾选完成 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 每个单元都能自己加新任务</div>
+    <div id="units"></div>
+  </main>
+
+  <!-- 商店 -->
+  <main id="tab-shop" style="display:none;">
+    <div class="shop-note">
+      ⚠️ <b>小小约定：</b>商店里的奖励都要<b>先和爸爸妈妈商量好</b>才能兑换哦！工作台只帮我们记账，
+      兑换成功后请找家长确认，再开心地领取奖励～ 💛
+    </div>
+    <div class="shop-grid" id="shopGrid"></div>
+    <button class="btn btn-ghost add-task" style="margin:2px 0 8px;" onclick="askAddGood()">➕ 给商店加一个新奖励</button>
+    <div class="legend">👆 点“兑换”＝下单，记得找家长确认 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 加奖励</div>
+    <div class="ledger">
+      <h3>📒 阳光账本</h3>
+      <table>
+        <thead><tr><th>时间</th><th>事情</th><th style="text-align:right;">阳光变化</th><th style="text-align:right;">余额</th></tr></thead>
+        <tbody id="ledgerBody"></tbody>
+      </table>
+      <div class="empty" id="ledgerEmpty" style="display:none;">还没有记录哦，快去完成任务攒阳光吧！☀️</div>
+    </div>
+  </main>
+
+  <!-- 数据 -->
+  <main id="tab-data" style="display:none;">
+    <div class="data-card">
+      <h3>📊 我的小成绩</h3>
+      <div class="stat-grid" id="statGrid"></div>
+    </div>
+    <div class="data-card">
+      <h3>📤 导出数据</h3>
+      <p>把学习记录保存成一个文件，换设备或备份时用得上。建议每周备份一次。</p>
+      <div class="btn-line">
+        <button class="btn btn-ghost" onclick="exportData()">📦 导出记录文件</button>
+      </div>
+    </div>
+    <div class="data-card">
+      <h3>📥 导入数据</h3>
+      <p>选择之前导出的记录文件，恢复所有学习进度和阳光积分。导入会<b>覆盖</b>当前数据，请小心操作。</p>
+      <div class="btn-line">
+        <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📂 选择文件导入</button>
+        <input type="file" id="importFile" accept=".json" style="display:none;">
+      </div>
+    </div>
+    <div class="data-card">
+      <h3>🗑️ 清空重来</h3>
+      <p>删除全部记录，从头开始（新学期可用）。此操作无法撤销，建议先导出备份。</p>
+      <div class="btn-line">
+        <button class="btn btn-warn" onclick="askReset()">🗑️ 清空所有数据</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>☀️ 阳光学习工作台 · 为深圳一年级小朋友定制 · 数据保存在本设备浏览器中<br>
+完成一项任务 +5 阳光 ☀️ ｜ 每日打卡 +20 阳光 🌞 ｜ 奖励兑换规则由家长和孩子提前约定</footer>
+
+<div class="toast" id="toast"></div>
+<div class="modal-mask" id="modalMask">
+  <div class="modal">
+    <div class="m-ic" id="mIcon">🎁</div>
+    <h3 id="mTitle"></h3>
+    <p id="mText"></p>
+    <input id="mInput" maxlength="30" placeholder="写个小任务，比如：练跳绳50个" style="display:none; width:100%; padding:12px 14px; border:3px solid #ffd166; border-radius:14px; font:inherit; font-size:15px; outline:none; margin-bottom:14px; box-sizing:border-box; background:#fffaf0;">
+    <input id="mCost" type="number" inputmode="numeric" min="1" max="99999" step="1" placeholder="要花多少阳光？（比如 60）" style="display:none; width:100%; padding:12px 14px; border:3px solid #ffd166; border-radius:14px; font:inherit; font-size:17px; outline:none; margin-bottom:10px; box-sizing:border-box; background:#fffaf0; text-align:center; font-weight:800;">
+    <div id="mIcons" class="icon-row" style="display:none;"></div>
+    <div class="row">
+      <button class="btn btn-ghost" id="mCancel">取消</button>
+      <button class="btn btn-buy" id="mOk">确定</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ 教材内容（一年级上册 · 按公立学校统一教材编排） ============ */
+const SUBJECTS = [
+  {id:"zh", ic:"🌟", name:"综合", color:"#f77f00", desc:"每日打卡小任务", daily:true,
+    units:[
+      {name:"每日阅读", tasks:[
+        "读一本绘本或15分钟课外书",
+        "把今天读的内容讲给家人听",
+        "背诵一首学过的古诗"]},
+      {name:"每日书法", tasks:[
+        "练坐姿和握笔姿势，写基本笔画2行",
+        "规范书写今天学的生字各1行",
+        "端端正正练写自己的名字1行"]},
+      {name:"每日计算", tasks:[
+        "口算10以内加减法20题（家长出题）",
+        "练习凑十法，说说哪两个数合起来是10",
+        "在生活中数一数、比一比（物品、台阶、数数）"]}]},
+  {id:"chinese", ic:"📖", name:"语文", color:"#ff9f1c", desc:"部编版一年级上册",
+    units:[
+      {name:"第一单元 · 识字（一）", tasks:[
+        "熟读《天地人》，认识“天、地、人、你、我、他”6个生字",
+        "背诵《金木水火土》，会认“一、二、三、四、五”",
+        "读《口耳目手足》，边读边指自己的五官",
+        "认读《日月山川》，和爸爸妈妈找找生活中的这些字",
+        "练习书写“一、二、三、上”4个字，每个写2行"]},
+      {name:"第二单元 · 汉语拼音（一）", tasks:[
+        "认读单韵母 a o e，能读准四声",
+        "认读单韵母 i u ü 和声母 y w",
+        "认读声母 b p m f，练习拼读音节",
+        "认读声母 d t n l，练习两拼音节",
+        "和爸爸妈妈玩“拼音卡片”配对游戏"]},
+      {name:"第三单元 · 汉语拼音（二）", tasks:[
+        "认读声母 g k h 和三拼音节",
+        "认读声母 j q x，记住“j q x 见到 ü 要摘帽”",
+        "认读声母 z c s 和整体认读音节 zi ci si",
+        "认读声母 zh ch sh r 和整体认读音节",
+        "练习拼读10个带声调的音节"]},
+      {name:"第四单元 · 汉语拼音（三）", tasks:[
+        "认读复韵母 ai ei ui 并练习拼读",
+        "认读复韵母 ao ou iu 并练习拼读",
+        "认读复韵母 ie üe er 和整体认读音节 ye yue",
+        "认读前鼻韵母 an en in un ün",
+        "认读后鼻韵母 ang eng ing ong",
+        "做一张拼音小报，写上学过的音节"]},
+      {name:"第五单元 · 阅读（一）", tasks:[
+        "朗读课文《秋天》，说说秋天有什么变化",
+        "背诵《小小的船》，想象夜空的样子",
+        "朗读《江南》，认读“可、东、西”等生字",
+        "朗读《四季》，仿说一句“什么季节，是什么样”"]},
+      {name:"第六单元 · 识字（二）", tasks:[
+        "认读《对韵歌》，找找文中的反义词",
+        "读《日月明》，了解“木+木=林”这样的会意字",
+        "读《小书包》，整理自己的文具并说出名字",
+        "读《升国旗》，学唱国歌，说说升旗时要怎么做"]},
+      {name:"第七单元 · 阅读（二）", tasks:[
+        "朗读《影子》，说说影子什么时候在前、什么时候在后",
+        "朗读《两件宝》，知道手和脑的作用",
+        "朗读《小松鼠找花生》，猜猜花生去哪儿了",
+        "朗读《拔萝卜》，和同学分角色演一演"]},
+      {name:"第八单元 · 期末复习", tasks:[
+        "默写声母表、韵母表、整体认读音节表",
+        "认读全册生字卡片，圈出还不熟的字",
+        "背诵本学期学过的课文给家长听",
+        "完成一份拼音综合练习卷"]}]},
+  {id:"math", ic:"🔢", name:"数学", color:"#8ecae6", desc:"一年级上册",
+    units:[
+      {name:"第一单元 · 生活中的数", tasks:[
+        "数一数：从1数到10，再倒着数回来",
+        "数一数家里10样东西，说出数量",
+        "用“多、少、一样多”比较两组物品",
+        "认读数字1~10，练习规范书写",
+        "找一找生活中的数字（门牌、车牌、钟表）"]},
+      {name:"第二单元 · 比较", tasks:[
+        "比一比：谁的铅笔长、谁的短",
+        "比高矮：和家人排队比一比",
+        "比轻重：用手掂一掂两个物品",
+        "比多少：摆一摆小圆片，一一对应比较"]},
+      {name:"第三单元 · 加与减（一）", tasks:[
+        "口算5以内加法10题，全对过关",
+        "口算5以内减法10题，全对过关",
+        "讲一个加法小故事（如：2只鸟又飞来1只）",
+        "口算10以内加减法混合20题",
+        "玩“凑十歌”，说说哪两个数合起来是10"]},
+      {name:"第四单元 · 分类", tasks:[
+        "整理书包：按学科给书本分类",
+        "整理玩具：按颜色或种类分一分",
+        "说说分类的标准可以不一样"]},
+      {name:"第五单元 · 位置与顺序", tasks:[
+        "说说自己的前面、后面、左边、右边分别是谁",
+        "用“上、下、前、后、左、右”描述物品位置",
+        "排队时说说谁在第几、自己在第几"]},
+      {name:"第六单元 · 认识图形", tasks:[
+        "认识长方体、正方体、圆柱、球，摸一摸说特点",
+        "在家中找出每种立体图形各2样",
+        "用积木搭一个喜欢的作品并拍照",
+        "数一数：这幅图里有多少个正方体"]},
+      {name:"第七单元 · 加与减（二）", tasks:[
+        "认读11~20各数，说说“十和几”组成",
+        "口算20以内不进位加法10题",
+        "口算20以内不退位减法10题",
+        "解决一个问题：妈妈买来14个苹果，吃了2个还剩几个？"]},
+      {name:"第八单元 · 认识钟表", tasks:[
+        "认识钟面：时针、分针和12个数字",
+        "认读整时，说出钟面上的时间",
+        "画一画：早上7时起床、晚上9时睡觉的钟面",
+        "记录自己一天的三个整时时刻"]}]},
+  {id:"english", ic:"🔤", name:"英语", color:"#ff8fab", desc:"一年级上册（牛津深圳版）",
+    units:[
+      {name:"Unit 1 · Hello! 打招呼", tasks:[
+        "会说 Hello / Hi / Goodbye 打招呼和告别",
+        "会用 I'm ... 介绍自己的名字",
+        "学说 How are you? — I'm fine, thank you!",
+        "和家人用英语互相问候3轮"]},
+      {name:"Unit 2 · My Classmates 我的同学", tasks:[
+        "听懂并说出 This is ... 介绍朋友",
+        "会用 morning / afternoon 说早上好、下午好",
+        "认读单词：boy / girl / friend",
+        "向家人介绍自己的两位同学"]},
+      {name:"Unit 3 · In the Classroom 教室里", tasks:[
+        "认读单词：book / pencil / bag / ruler",
+        "会说 What's this? — It's a ...",
+        "听指令做动作：Stand up / Sit down / Open your book",
+        "给自己的文具贴上英文小标签"]},
+      {name:"Unit 4 · I Can Sing 我会做", tasks:[
+        "会说 I can ... 说说自己会做的事",
+        "认读单词：sing / dance / draw / read",
+        "学唱一首英文儿歌（如 ABC Song）",
+        "用 I can ... 说3句话"]},
+      {name:"Unit 5 · That's My Family 我的家人", tasks:[
+        "认读单词：father / mother / brother / sister",
+        "会说 This is my ... 介绍家人",
+        "画一张全家福并标上英文称呼",
+        "向家人用英语介绍3位家庭成员"]},
+      {name:"Unit 6 · Colours and Numbers 颜色和数字", tasks:[
+        "认读颜色：red / yellow / blue / green",
+        "从1数到10，认读英文数字",
+        "玩“我说你指”：家长说颜色，你指家里的物品",
+        "数一数家里有几种颜色，用英语说出来"]},
+      {name:"字母乐园 · Letters", tasks:[
+        "认读字母 Aa~Ee，听音能辨认",
+        "认读字母 Ff~Jj，大小写配对",
+        "认读字母 Kk~Oo，边写边读",
+        "拼写自己的英文名（或给自己起一个）"]}]},
+  {id:"science", ic:"🔬", name:"科学", color:"#8bd450", desc:"一年级上册",
+    units:[
+      {name:"第一单元 · 植物", tasks:[
+        "说说我们知道哪些植物，画一种最喜欢的",
+        "到小区观察一棵树，用眼睛看、用手摸、用鼻子闻",
+        "观察一片树叶，画下它的形状和叶脉",
+        "说说植物是“活”的吗？为什么？",
+        "和家长一起种一颗小种子（豆子/蒜苗），每天观察记录"]},
+      {name:"第二单元 · 我们自己", tasks:[
+        "认识身体：说出头、颈、躯干、四肢",
+        "说说五个感官（眼耳鼻舌手）分别能做什么",
+        "闭眼听一听：辨认家里的3种声音",
+        "用放大镜观察手指纹，看看和别人的一样吗"]},
+      {name:"第三单元 · 家里的小科学", tasks:[
+        "观察冰块融化，说说水的变化",
+        "做“糖去哪儿了”小实验：糖溶解在水里",
+        "观察影子：手电筒照玩具，让影子变大变小",
+        "说说空气在哪里，用手扇一扇感受风"]},
+      {name:"第四单元 · 校园观察", tasks:[
+        "在校园里找3种小动物，说说它们住在哪里",
+        "观察蚂蚁搬家或蜗牛爬行（不打扰它们）",
+        "用“上、下、左、右”描述一颗小球的运动",
+        "和爸爸妈妈去一次公园，观察并记录3种植物"]}]},
+  {id:"moral", ic:"💛", name:"道法", color:"#ffd166", desc:"一年级上册",
+    units:[
+      {name:"第一单元 · 我是小学生啦", tasks:[
+        "说说上小学和幼儿园有什么不一样",
+        "练习向老师、同学大声问好",
+        "熟悉校园：认一认教室、厕所、操场在哪里",
+        "说说上学路上要注意什么（红灯停、绿灯行）",
+        "自己背书包、整理文具，不让家长代劳"]},
+      {name:"第二单元 · 过好校园学习生活", tasks:[
+        "说说上课的规矩：坐端正、认真听、举手发言",
+        "课间文明休息：不追逐打闹，先喝水上厕所",
+        "练习排队：快、静、齐",
+        "说说“我不拖拉”：放学回家先做什么",
+        "和同学合作完成一件小事，说说感受"]},
+      {name:"第三单元 · 养成良好习惯", tasks:[
+        "饭前洗手，说说洗手七步法",
+        "不挑食，说出今天吃了哪些蔬菜",
+        "练习自己整理床铺或叠衣服",
+        "早晚刷牙，坚持一周打√",
+        "礼貌用语练一练：请、谢谢、对不起、没关系"]},
+      {name:"第四单元 · 安全记心间", tasks:[
+        "记住家长电话号码和自己的家庭住址",
+        "说说遇到陌生人给东西该怎么办",
+        "认识安全标志：当心触电、禁止烟火",
+        "说说玩火、玩电的危害",
+        "演练：和家人走散了应该怎么办"]}]},
+  {id:"pe", ic:"⚽", name:"体育", color:"#4cc9f0", desc:"一年级体适能",
+    units:[
+      {name:"第一单元 · 队列与体操", tasks:[
+        "练习立正、稍息、向前看齐",
+        "学习小学生广播体操（第一段）",
+        "学习广播体操（第二段），跟上音乐做完整套",
+        "原地踏步走，摆臂有精神"]},
+      {name:"第二单元 · 跳绳小达人", tasks:[
+        "练习摇绳和跳跃分解动作",
+        "连续并脚跳10个",
+        "连续并脚跳30个",
+        "一分钟跳绳计数，记录最好成绩",
+        "和爸爸妈妈比赛一分钟跳绳"]},
+      {name:"第三单元 · 跑步与游戏", tasks:[
+        "练习30米快速跑，记录用时",
+        "玩“老鹰捉小鸡”，跑动5分钟",
+        "练习双脚连续跳（像小兔子）20米",
+        "玩“石头剪刀布跳格子”游戏"]},
+      {name:"第四单元 · 柔韧与球类", tasks:[
+        "坐位体前屈练习，指尖碰到脚尖",
+        "练习抛接球：自抛自接20次",
+        "原地拍球50个",
+        "和家人玩互相滚球游戏10分钟"]}]},
+  {id:"art", ic:"🎵", name:"音美", color:"#a78bfa", desc:"音乐与美术",
+    units:[
+      {name:"音乐 · 唱歌与律动", tasks:[
+        "学唱《上学歌》，边唱边打节拍",
+        "学唱《国旗国旗真美丽》",
+        "学唱《小星星》，加上简单动作",
+        "听一段音乐，说说它是快还是慢、开心还是安静",
+        "练习跟着节拍拍手：X X | XX X |"]},
+      {name:"美术 · 画画与手工", tasks:[
+        "画《我的学校》，涂上漂亮的颜色",
+        "画一画自己的小手，添画变成新东西",
+        "用彩纸折一架小飞机或一只小狗",
+        "用橡皮泥捏一个水果拼盘",
+        "用树叶或花瓣拼贴一幅画"]}]},
+];
+
+
+/* ============ 默认奖励库（新用户 / 老数据迁移时的初始奖励，可增改删） ============ */
+const DEFAULT_SHOP = [
+  {id:"cartoon", ic:"📺", name:"看一集动画片", cost:60},
+  {id:"game",   ic:"🎮", name:"玩 30 分钟游戏", cost:120},
+  {id:"outing", ic:"🎡", name:"周末外出游玩", cost:300},
+];
+
+const TASK_POINT = 5, CHECKIN_POINT = 20;
+const KEY = "sunshine-desk-v1";
+
+/* ============ 数据 ============ */
+let state = load();
+function normShop(arr){
+  if(!Array.isArray(arr) || !arr.length) arr = DEFAULT_SHOP;
+  return arr.filter(i=>i && String(i.name||"").trim()).map(i=>({
+    id: i.id || "g"+Math.random().toString(36).slice(2,8),
+    ic: (typeof i.ic === "string" && i.ic.trim()) ? i.ic : "🎁",
+    name: String(i.name).trim(),
+    cost: Math.max(1, Math.min(99999, Math.round(Number(i.cost)) || 60))
+  }));
+}
+function load(){
+  let s = null;
+  try{ s = JSON.parse(localStorage.getItem(KEY)); }catch(e){}
+  if(!s || typeof s.points !== "number"){
+    s = {name:"小朋友", points:0, totalEarned:0, done:{}, checkins:{}, streak:0, lastCheckin:null, ledger:[], custom:[]};
+  }
+  const st = {
+    name: s.name || "小朋友", points: s.points, totalEarned: s.totalEarned || 0,
+    done: s.done || {}, checkins: s.checkins || {}, streak: s.streak || 0,
+    lastCheckin: s.lastCheckin || null, ledger: s.ledger || [],
+    custom: Array.isArray(s.custom) ? s.custom : [],
+    ut: s.ut && typeof s.ut === "object" ? s.ut : {},
+    shop: normShop(s.shop)
+  };
+  const td = today();
+  Object.keys(st.done).forEach(k=>{
+    if(k.indexOf("d|")===0){ if(k.indexOf("d|"+td+"|")!==0) delete st.done[k]; return; }
+    if(!SUBJECTS.some(x=>k.indexOf(x.id+"-")===0)) delete st.done[k];
+  });
+  return materializeAll(st);
+}
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+function today(){ const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function daysBetween(a,b){
+  if(!a||!b) return null;
+  const [y1,m1,d1]=a.split("-").map(Number), [y2,m2,d2]=b.split("-").map(Number);
+  return Math.round((new Date(y2,m2-1,d2) - new Date(y1,m1-1,d1))/86400000);
+}
+/* 任务分组 / 任务列表(可编辑) / 任务key */
+function subjGroups(sub){
+  const gs = sub.units.map(u=>({name:u.name, tasks:u.tasks}));
+  if(sub.daily) gs.push({name:"我的自定义任务", tasks: state.custom.map(c=>c.t), custom:true});
+  return gs;
+}
+function effTasks(sub, g){
+  if(g.custom) return state.custom.map(c=>({id:c.id, t:c.t}));
+  const uid = sub.id+"-"+g.name;
+  if(!state.ut[uid]) state.ut[uid] = g.tasks.map((t,i)=>({id:String(i), t}));
+  return state.ut[uid];
+}
+function taskKeyOf(sub, g, it){
+  const base = g.custom ? sub.id+"-custom-"+it.id : sub.id+"-"+g.name+"-"+it.id;
+  return sub.daily ? "d|"+today()+"|"+base : base;
+}
+function materializeAll(st){
+  const ut = st.ut || {};
+  SUBJECTS.forEach(sub=>{
+    sub.units.forEach(u=>{
+      const uid = sub.id+"-"+u.name;
+      if(!ut[uid]) ut[uid] = u.tasks.map((t,i)=>({id:String(i), t}));
+    });
+  });
+  st.ut = ut;
+  return st;
+}
+
+/* ============ 积分与账本 ============ */
+function addLedger(thing, delta){
+  state.ledger.unshift({time: today(), thing, delta, balance: state.points});
+  if(state.ledger.length > 200) state.ledger.length = 200;
+}
+function earn(n, thing){
+  state.points += n; state.totalEarned += n;
+  addLedger(thing, +n); save();
+  toast("+"+n+" ☀️ "+thing); bump();
+  renderPoints(); renderShop(); renderLedger(); renderStats();
+}
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove("show"), 2200);
+}
+function bump(){
+  const p = document.getElementById("pointsPill");
+  p.classList.remove("bump"); void p.offsetWidth; p.classList.add("bump");
+}
+
+/* ============ 渲染 ============ */
+let curSubject = "zh";
+
+function renderPoints(){
+  document.getElementById("pointsNum").textContent = state.points;
+}
+function renderSidebar(){
+  const sb = document.getElementById("sidebar");
+  sb.querySelectorAll(".subj").forEach(n=>n.remove());
+  SUBJECTS.forEach(sub=>{
+    const groups = subjGroups(sub).map(g=>({g, items:effTasks(sub,g)}));
+    const total = groups.reduce((n,x)=>n+x.items.length,0);
+    const done = groups.reduce((n,x)=>n+x.items.filter(it=>state.done[taskKeyOf(sub,x.g,it)]).length,0);
+    const b = document.createElement("button");
+    b.className = "subj" + (sub.id===curSubject?" on":"");
+    b.innerHTML = '<span class="ic">'+sub.ic+'</span><span>'+sub.name+'</span><span class="prog">'+
+      (sub.daily ? "今日"+done+"/"+total : done+"/"+total)+'</span>';
+    b.onclick = ()=>{ curSubject = sub.id; renderSidebar(); renderUnits(); };
+    sb.appendChild(b);
+  });
+}
+function renderUnits(){
+  const sub = SUBJECTS.find(s=>s.id===curSubject);
+  const box = document.getElementById("units");
+  box.innerHTML = "";
+  subjGroups(sub).forEach((g,ui)=>{
+    const items = effTasks(sub,g);
+    const card = document.createElement("div");
+    card.className = "unit";
+    const allDone = items.length>0 && items.every(it=>state.done[taskKeyOf(sub,g,it)]);
+    if(allDone) card.classList.add("done");
+    const head = document.createElement("div");
+    head.className = "unit-head";
+    head.innerHTML = '<span class="badge">'+(sub.daily ? "今日" : "单元 "+(ui+1))+'</span><span>'+
+      g.name+'</span>'+(g.custom?'<span style="font-size:11px;color:#a39d8e;font-weight:600;">自己定的</span>':'')+
+      '<span class="arrow">▼</span>';
+    head.onclick = ()=>card.classList.toggle("open");
+    card.appendChild(head);
+    const list = document.createElement("div");
+    list.className = "tasks";
+    items.forEach((it)=>{
+      const key = taskKeyOf(sub,g,it);
+      const row = document.createElement("div");
+      row.className = "task" + (state.done[key]?" done":"");
+      row.innerHTML = '<div class="box">'+(state.done[key]?"✓":"")+'</div><div class="txt">'+it.t+'</div>';
+      const ed = mini("✏️","edit","修改这个任务");
+      ed.onclick = (e)=>{ e.stopPropagation(); askEditTask(sub,g,it); };
+      row.appendChild(ed);
+      const dl = mini("✕","del","删除这个任务");
+      dl.onclick = (e)=>{ e.stopPropagation(); askDelTask(sub,g,it,it.t); };
+      row.appendChild(dl);
+      const coin = document.createElement("div");
+      coin.className = "coin"; coin.textContent = "+5 ☀️";
+      row.appendChild(coin);
+      row.onclick = ()=>toggleTask(key, sub, g, it);
+      list.appendChild(row);
+    });
+    const add = document.createElement("button");
+    add.className = "btn btn-ghost add-task";
+    add.textContent = "➕ 给「"+g.name+"」加一个新任务";
+    add.onclick = ()=>askAddTask(sub,g);
+    list.appendChild(add);
+    card.appendChild(list);
+    box.appendChild(card);
+    if(allDone || items.length===0) card.classList.add("open");
+  });
+}
+function mini(txt, cls, tip){
+  const m = document.createElement("div");
+  m.className = "mini "+cls; m.textContent = txt; m.title = tip;
+  return m;
+}
+function toggleTask(key, sub, g, it){
+  if(state.done[key]){
+    delete state.done[key];
+    state.points -= TASK_POINT; state.totalEarned = Math.max(0, state.totalEarned - TASK_POINT);
+    addLedger("取消任务："+sub.name+"·"+g.name, -TASK_POINT);
+    save(); toast("已取消勾选，阳光 -"+TASK_POINT);
+  }else{
+    state.done[key] = true;
+    earn(TASK_POINT, "完成任务："+sub.name+"·"+g.name);
+    const items = effTasks(sub,g);
+    const allDone = items.length>0 && items.every(x=>state.done[taskKeyOf(sub,g,x)]);
+    if(allDone) toast("🎉 恭喜！这一组全部完成啦！");
+  }
+  renderSidebar(); renderUnits();
+}
+/* ---- 任务的新增 / 修改 / 删除（所有学科、所有单元通用） ---- */
+function askAddTask(sub, g){
+  showPrompt("➕","新增一个任务",
+    g.custom ? "写下你想每天坚持的小任务，完成+5阳光～"
+             : "给「"+g.name+"」添加任务，孩子完成就+5阳光～","", v=>{
+    if(g.custom) state.custom.push({id: Date.now(), t: v});
+    else effTasks(sub,g).push({id:"a"+Date.now(), t: v});
+    save(); renderSidebar(); renderUnits(); toast("加好啦 ☀️");
+  });
+}
+function askEditTask(sub, g, it){
+  showPrompt("✏️","修改任务",
+    g.custom ? "改一改你的小任务吧" : "修改「"+g.name+"」里的这个任务", it.t, v=>{
+    if(g.custom){ const c = state.custom.find(x=>x.id===it.id); if(c) c.t = v; }
+    else { const x = effTasks(sub,g).find(y=>y.id===it.id); if(x) x.t = v; }
+    save(); renderSidebar(); renderUnits(); toast("改好了 ✏️");
+  });
+}
+function askDelTask(sub, g, it, name){
+  showConfirm("🗑️","删除「"+name+"」？","删除后这个任务不再出现（已得的阳光不变）。",()=>{
+    const uid = sub.id+"-"+g.name;
+    if(g.custom) state.custom = state.custom.filter(c=>c.id!==it.id);
+    else state.ut[uid] = effTasks(sub,g).filter(x=>x.id!==it.id);
+    delete state.done[taskKeyOf(sub,g,it)];
+    save(); renderSidebar(); renderUnits(); toast("已删除");
+  });
+}
+function renderCheckin(){
+  const t = today();
+  document.getElementById("greet").textContent = "你好呀，" + state.name + "！";
+  document.getElementById("streakNum").textContent = state.streak;
+  const btn = document.getElementById("btnCheckin");
+  if(state.checkins[t]){ btn.disabled = true; btn.innerHTML = "✅ 今天已打卡"; }
+  else{ btn.disabled = false; btn.innerHTML = "打卡 +" + CHECKIN_POINT + " ☀️"; }
+}
+document.getElementById("btnCheckin").onclick = ()=>{
+  const t = today();
+  if(state.checkins[t]) return;
+  const gap = state.lastCheckin ? daysBetween(state.lastCheckin, t) : null;
+  state.streak = (gap === 1) ? state.streak + 1 : 1;
+  state.checkins[t] = true; state.lastCheckin = t;
+  earn(CHECKIN_POINT, "每日打卡（连续"+state.streak+"天）");
+  renderCheckin();
+  if(state.streak === 7) toast("🔥 连续打卡7天，太棒了！");
+};
+
+/* ---- 商店奖励：新增 / 修改 / 删除 / 兑换 ---- */
+function renderShop(){
+  const g = document.getElementById("shopGrid");
+  g.innerHTML = "";
+  state.shop.forEach(item=>{
+    const d = document.createElement("div");
+    d.className = "goods";
+    d.innerHTML = '<div class="g-ops">'+
+        '<div class="mini edit" title="修改这个奖励">✏️</div>'+
+        '<div class="mini del" title="删除这个奖励">✕</div></div>'+
+      '<div class="gic">'+item.ic+'</div><h3>'+item.name+'</h3>'+
+      '<div class="cost">'+item.cost+'</div>'+
+      '<button class="btn btn-buy" '+(state.points<item.cost?"disabled":"")+'>'+
+      (state.points<item.cost?"阳光还不够哦":"兑换")+'</button>';
+    d.querySelector(".mini.edit").onclick = (e)=>{ e.stopPropagation(); askEditGood(item); };
+    d.querySelector(".mini.del").onclick = (e)=>{ e.stopPropagation(); askDelGood(item); };
+    d.querySelector("button").onclick = ()=>askBuy(item);
+    g.appendChild(d);
+  });
+}
+function askAddGood(){
+  showGoodsForm("🛍️","新增一个奖励",
+    "奖励是什么、要花多少阳光、用什么图标，都由你和爸爸妈妈一起商量好～",
+    {name:"", cost:"", ic:""}, o=>{
+    state.shop.push({id:"g"+Date.now(), ic:o.ic, name:o.name, cost:o.cost});
+    save(); renderShop(); toast("新奖励上架啦 🎉");
+  });
+}
+function askEditGood(item){
+  showGoodsForm("✏️","修改奖励","改名称、阳光分值或图标都可以～",
+    {name:item.name, cost:item.cost, ic:item.ic}, o=>{
+    const x = state.shop.find(i=>i.id===item.id);
+    if(x){ x.name = o.name; x.cost = o.cost; x.ic = o.ic; }
+    save(); renderShop(); toast("改好了 ✏️");
+  });
+}
+function askDelGood(item){
+  showConfirm("🗑️","删除「"+item.name+"」？",
+    "删除后商店里不再有它（已经兑换过的账本记录保留）。",()=>{
+    state.shop = state.shop.filter(i=>i.id!==item.id);
+    save(); renderShop(); toast("已删除");
+  });
+}
+function askBuy(item){
+  showConfirm("🎁", "兑换「"+item.name+"」？",
+    "将花费 "+item.cost+" 阳光 ☀️<br>兑换后请<b>找爸爸妈妈确认</b>，商量好的时间再领取奖励哦～",
+    ()=>{
+      if(state.points < item.cost){ toast("阳光不够，先攒一攒吧！"); return; }
+      state.points -= item.cost;
+      addLedger("兑换奖励："+item.name, -item.cost);
+      save(); toast("兑换成功！记得找家长确认 🎉");
+      renderPoints(); renderShop(); renderLedger(); renderStats();
+    });
+}
+function renderLedger(){
+  const tb = document.getElementById("ledgerBody");
+  const empty = document.getElementById("ledgerEmpty");
+  if(!state.ledger.length){ tb.innerHTML=""; empty.style.display="block"; return; }
+  empty.style.display="none";
+  tb.innerHTML = state.ledger.map(r=>
+    '<tr class="'+(r.delta<0?"use":"")+'"><td>'+r.time+'</td><td>'+r.thing+'</td>'+
+    '<td style="text-align:right;" class="'+(r.delta<0?"spend":"earn")+'">'+
+    (r.delta>0?"+":"")+r.delta+'</td>'+
+    '<td style="text-align:right; font-weight:700;">'+r.balance+'</td></tr>').join("");
+}
+function renderStats(){
+  const totalTasks = SUBJECTS.reduce((n,s)=>n+subjGroups(s).reduce((m,g)=>m+effTasks(s,g).length,0),0);
+  const doneCount = Object.keys(state.done).length;
+  const days = Object.keys(state.checkins).length;
+  document.getElementById("statGrid").innerHTML =
+    stat(doneCount+"/"+totalTasks,"完成任务")+stat(state.points,"当前阳光")+
+    stat(state.totalEarned,"累计阳光")+stat(days,"打卡天数")+stat(state.streak,"连续天数")+
+    stat(Math.round(doneCount/Math.max(totalTasks,1)*100)+"%","学习进度");
+  function stat(a,b){ return '<div class="stat"><div class="big">'+a+'</div><div class="lbl">'+b+'</div></div>'; }
+}
+
+/* ============ 名字 ============ */
+const nameInput = document.getElementById("nameInput");
+nameInput.value = state.name;
+nameInput.addEventListener("input", ()=>{
+  state.name = nameInput.value.trim() || "小朋友";
+  save(); renderCheckin();
+});
+
+/* ============ 弹窗（确认 / 单行输入 / 奖励表单） ============ */
+let modalMode = "none", confirmCb = null, promptCb = null, goodsCb = null, selIc = "🎁";
+const ICONS = ["🎁","📺","🎮","🍿","🎬","🧸","🍦","🍰","🧁","🚲","🏀","⚽","🏊","🎨","🧩","📚","🦖","🚀","🎡","🐰","💻","🎤"];
+function hideModal(){
+  document.getElementById("modalMask").classList.remove("show");
+  document.getElementById("mInput").style.display = "none";
+  document.getElementById("mCost").style.display = "none";
+  document.getElementById("mIcons").style.display = "none";
+  modalMode = "none";
+}
+function showConfirm(ic, title, html, cb){
+  hideModal();
+  modalMode = "confirm"; confirmCb = cb;
+  document.getElementById("mIcon").textContent = ic;
+  document.getElementById("mTitle").textContent = title;
+  document.getElementById("mText").innerHTML = html;
+  document.getElementById("modalMask").classList.add("show");
+}
+function showPrompt(ic, title, hint, prefill, cb){
+  hideModal();
+  modalMode = "prompt"; promptCb = cb;
+  document.getElementById("mIcon").textContent = ic;
+  document.getElementById("mTitle").textContent = title;
+  document.getElementById("mText").textContent = hint;
+  const inp = document.getElementById("mInput");
+  inp.style.display = "block";
+  inp.value = prefill || "";
+  inp.placeholder = "写个小任务，比如：练跳绳50个";
+  document.getElementById("modalMask").classList.add("show");
+  setTimeout(()=>{ try{ inp.focus(); }catch(e){} }, 200);
+}
+function showGoodsForm(ic, title, hint, pre, cb){
+  hideModal();
+  modalMode = "goods"; goodsCb = cb;
+  selIc = ICONS.indexOf(pre.ic) > -1 ? pre.ic : ICONS[Math.floor(Math.random()*ICONS.length)];
+  document.getElementById("mIcon").textContent = ic;
+  document.getElementById("mTitle").textContent = title;
+  document.getElementById("mText").textContent = hint;
+  const inp = document.getElementById("mInput");
+  inp.style.display = "block";
+  inp.value = pre.name || "";
+  inp.placeholder = "奖励叫什么？比如：买一个小玩具";
+  const cost = document.getElementById("mCost");
+  cost.style.display = "block";
+  cost.value = (pre.cost !== "" && pre.cost != null) ? pre.cost : "";
+  const box = document.getElementById("mIcons");
+  box.style.display = "flex";
+  box.innerHTML = "";
+  ICONS.forEach(em=>{
+    const c = document.createElement("div");
+    c.className = "icon-chip" + (em===selIc ? " on" : "");
+    c.textContent = em;
+    c.onclick = ()=>{
+      selIc = em;
+      Array.from(box.children).forEach(ch=>ch.classList.toggle("on", ch.textContent===em));
+    };
+    box.appendChild(c);
+  });
+  document.getElementById("modalMask").classList.add("show");
+  setTimeout(()=>{ try{ inp.focus(); }catch(e){} }, 200);
+}
+document.getElementById("mCancel").onclick = hideModal;
+document.getElementById("mOk").onclick = ()=>{
+  if(modalMode === "prompt"){
+    const v = document.getElementById("mInput").value.trim();
+    if(!v){ toast("先写上内容哦 ✍️"); return; }
+    hideModal();
+    const cb = promptCb; promptCb = null;
+    if(cb) cb(v);
+  }else if(modalMode === "goods"){
+    const name = document.getElementById("mInput").value.trim();
+    const cost = parseInt(document.getElementById("mCost").value, 10);
+    if(!name){ toast("先给奖励起个名字哦 🎁"); return; }
+    if(!(cost >= 1)){ toast("写一个阳光价格（要 ≥1 哦）☀️"); return; }
+    hideModal();
+    const cb = goodsCb; goodsCb = null;
+    if(cb) cb({name: name, cost: Math.min(cost, 99999), ic: selIc});
+  }else if(modalMode === "confirm"){
+    hideModal();
+    const cb = confirmCb; confirmCb = null;
+    if(cb) cb();
+  }
+};
+document.getElementById("modalMask").addEventListener("click", e=>{
+  if(e.target.id==="modalMask"){ hideModal(); confirmCb = null; promptCb = null; goodsCb = null; }
+});
+
+/* ============ 导入导出 ============ */
+function exportData(){
+  const blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "阳光学习工作台-"+state.name+"-"+today()+".json";
+  a.click(); URL.revokeObjectURL(a.href);
+  toast("📦 记录已导出");
+}
+document.getElementById("importFile").addEventListener("change", e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      const s = JSON.parse(r.result);
+      if(typeof s.points !== "number") throw 0;
+      showConfirm("📥","导入这份记录？","将用「"+(s.name||"小朋友")+"」的记录覆盖当前数据。",()=>{
+        localStorage.setItem(KEY, JSON.stringify(s));
+        location.reload();
+      });
+    }catch(err){ toast("文件格式不对哦"); }
+  };
+  r.readAsText(f); e.target.value = "";
+});
+function askReset(){
+  showConfirm("🗑️","清空所有数据？","所有任务进度、阳光和账本都会被删除，<b>无法恢复</b>！建议先导出备份。",()=>{
+    localStorage.removeItem(KEY); location.reload();
+  });
+}
+
+/* ============ 标签页 ============ */
+document.querySelectorAll("nav.tabs button").forEach(b=>{
+  b.onclick = ()=>{
+    document.querySelectorAll("nav.tabs button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    ["study","shop","data"].forEach(t=>{
+      document.getElementById("tab-"+t).style.display = (t===b.dataset.tab)?"":"none";
+    });
+  };
+});
+
+/* ============ 启动 ============ */
+renderPoints(); renderSidebar(); renderUnits(); renderCheckin(); renderShop(); renderLedger(); renderStats();
+</script>
+</body>
+</html>
