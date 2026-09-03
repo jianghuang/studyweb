@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title> sunny ☀ 学习工作台</title>
+<title>学习积分平台</title>
 <style>
   :root{
     --sun:#ffb703; --sun2:#ffd166; --sky:#8ecae6; --sky2:#bde0fe;
@@ -165,6 +165,23 @@
     border:3px solid #ffe3c4; font-size:24px; line-height:1; display:flex; align-items:center;
     justify-content:center; cursor:pointer; flex-shrink:0; transition:.12s;}
   .icon-chip.on{border-color:#f77f00; background:#fff0d6; transform:scale(1.12);}
+  /* ---------- 坏习惯 ---------- */
+  .bad-card{
+    background:var(--card); border-radius:var(--r); padding:22px 16px 16px; text-align:center;
+    box-shadow:var(--shadow); border:3px solid #ffd6d6; position:relative; transition:.15s;
+    cursor:pointer;
+  }
+  .bad-card:active{transform:scale(.96);}
+  .bad-card .gic{font-size:52px; line-height:1;}
+  .bad-card h3{margin:10px 0 4px; font-size:17px;}
+  .bad-card .cost{font-weight:800; color:#e85d04; font-size:15px; margin-bottom:6px;}
+  .bad-card .cost::before{content:"-"; }
+  .bad-card .cost::after{content:" ☀️";}
+  .bad-card .cnt{
+    font-size:12.5px; font-weight:700; color:#c9184a; background:#ffe3ee;
+    border-radius:999px; padding:3px 12px; display:inline-block; margin-bottom:10px;
+  }
+  .bad-card .hint{font-size:12px; color:#a39d8e; margin-bottom:10px;}
   .ledger{margin-top:26px;}
   .ledger h3{font-size:16px; margin-bottom:10px; display:flex; align-items:center; gap:6px;}
   .ledger table{width:100%; border-collapse:collapse; background:#fff; border-radius:var(--r);
@@ -225,7 +242,7 @@
 
 <header>
   <div class="logo">🌈</div>
-  <div class="title">阳光学习工作台</div>
+  <div class="title">⭐ 学习积分平台</div>
   <div class="header-right">
     <div class="name-pill">🧒<input id="nameInput" maxlength="8" title="点击修改名字"></div>
     <div class="points-pill" id="pointsPill">☀️<span class="num" id="pointsNum">0</span><span style="font-size:13px;color:#a39d8e;">阳光</span></div>
@@ -233,6 +250,7 @@
   <nav class="tabs">
     <button class="on" data-tab="study">📚 学习任务</button>
     <button data-tab="shop">🎁 阳光商店</button>
+    <button data-tab="bad">😤 坏习惯记录</button>
     <button data-tab="data">💾 我的成长档案</button>
   </nav>
 </header>
@@ -249,7 +267,7 @@
         <p>每天完成学习后来打卡，攒够阳光去商店换奖励～</p>
         <div class="streak">🔥 连续打卡 <span id="streakNum">0</span> 天</div>
       </div>
-      <button class="btn btn-sun" id="btnCheckin">打卡 +20 ☀️</button>
+      <button class="btn btn-sun" id="btnCheckin">打卡 +10 ☀️</button>
     </div>
     <div class="legend">👆 点任务文字＝勾选完成 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 每个单元都能自己加新任务</div>
     <div id="units"></div>
@@ -258,7 +276,7 @@
   <!-- 商店 -->
   <main id="tab-shop" style="display:none;">
     <div class="shop-note">
-      ⚠️ <b>小小约定：</b>商店里的奖励都要<b>先和爸爸妈妈商量好</b>才能兑换哦！工作台只帮我们记账，
+      ⚠️ <b>小小约定：</b>商店里的奖励都要<b>先和爸爸妈妈商量好</b>才能兑换哦！平台只帮我们记账，
       兑换成功后请找家长确认，再开心地领取奖励～ 💛
     </div>
     <div class="shop-grid" id="shopGrid"></div>
@@ -271,6 +289,31 @@
         <tbody id="ledgerBody"></tbody>
       </table>
       <div class="empty" id="ledgerEmpty" style="display:none;">还没有记录哦，快去完成任务攒阳光吧！☀️</div>
+    </div>
+  </main>
+
+  <!-- 坏习惯 -->
+  <main id="tab-bad" style="display:none;">
+    <div class="shop-note">
+      😤 <b>坏习惯小警钟：</b>出现坏习惯，家长就点一下对应卡片记录并<b>扣阳光</b>。
+      每天做了几次、扣了多少都会统计在下面的表里——知错能改，把阳光再挣回来就是好孩子！💪
+    </div>
+    <div class="shop-grid" id="badGrid"></div>
+    <button class="btn btn-ghost add-task" style="margin:2px 0 8px;" onclick="askAddBad()">➕ 加一个要提醒的坏习惯</button>
+    <div class="legend">👆 点卡片＝记录一次并扣分 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 加坏习惯</div>
+    <div class="ledger">
+      <h3>📊 坏习惯统计（按每一项，累计）</h3>
+      <table>
+        <thead><tr>
+          <th>坏习惯</th>
+          <th style="text-align:center;">今天次数</th>
+          <th style="text-align:center;">今天扣分</th>
+          <th style="text-align:center;">累计次数</th>
+          <th style="text-align:right;">累计扣分</th>
+        </tr></thead>
+        <tbody id="badBody"></tbody>
+      </table>
+      <div class="empty" id="badEmpty" style="display:none;">还没有记录哦，继续保持！🌟</div>
     </div>
   </main>
 
@@ -305,8 +348,7 @@
   </main>
 </div>
 
-<footer>☀️ 阳光学习工作台 · 为深圳一年级小朋友定制 · 数据保存在本设备浏览器中<br>
-完成一项任务 +5 阳光 ☀️ ｜ 每日打卡 +20 阳光 🌞 ｜ 奖励兑换规则由家长和孩子提前约定</footer>
+<footer>完成一项任务 +5 阳光 ☀️ ｜ 每日打卡 +10 阳光 🌞 ｜ 坏习惯会扣阳光哦 ｜ 奖励兑换规则由家长和孩子提前约定</footer>
 
 <div class="toast" id="toast"></div>
 <div class="modal-mask" id="modalMask">
@@ -340,7 +382,15 @@ const SUBJECTS = [
       {name:"每日计算", tasks:[
         "口算10以内加减法20题（家长出题）",
         "练习凑十法，说说哪两个数合起来是10",
-        "在生活中数一数、比一比（物品、台阶、数数）"]}]},
+        "在生活中数一数、比一比（物品、台阶、数数）"]},
+      {name:"每日锻炼", tasks:[
+        "跳绳100个（可以分成2组完成）",
+        "做一遍广播体操，或开合跳30个",
+        "和家人到楼下跑步、拍球或散步20分钟"]},
+      {name:"每日劳动", tasks:[
+        "整理自己的书包和书桌，物品归位",
+        "帮忙摆碗筷，或饭后收拾碗筷擦桌子",
+        "做一件家务：扫地、浇花或照顾小宠物"]}]},
   {id:"chinese", ic:"📖", name:"语文", color:"#ff9f1c", desc:"部编版一年级上册",
     units:[
       {name:"第一单元 · 识字（一）", tasks:[
@@ -559,22 +609,46 @@ const SUBJECTS = [
 /* ============ 默认奖励库（新用户 / 老数据迁移时的初始奖励，可增改删） ============ */
 const DEFAULT_SHOP = [
   {id:"cartoon", ic:"📺", name:"看一集动画片", cost:60},
-  {id:"game",   ic:"🎮", name:"玩 30 分钟游戏", cost:120},
+  {id:"game",   ic:"🎮", name:"玩 15 分钟游戏", cost:120},
   {id:"outing", ic:"🎡", name:"周末外出游玩", cost:300},
 ];
+/* ============ 默认坏习惯（可增改删；出现就扣阳光） ============ */
+const DEFAULT_BADS = [
+  {id:"temper", ic:"😡", name:"发脾气",   cost:10},
+  {id:"rude",   ic:"🗯️", name:"不好好说话", cost:5},
+  {id:"delay",  ic:"🐌", name:"做事拖延、没按时完成", cost:10},
+  {id:"latebed",ic:"🌙", name:"没有按时睡觉", cost:15},
+];
 
-const TASK_POINT = 5, CHECKIN_POINT = 20;
+const TASK_POINT = 5, CHECKIN_POINT = 10;
 const KEY = "sunshine-desk-v1";
 
 /* ============ 数据 ============ */
 let state = load();
 function normShop(arr){
   if(!Array.isArray(arr) || !arr.length) arr = DEFAULT_SHOP;
+  return arr.filter(i=>i && String(i.name||"").trim()).map(i=>{
+    let name = String(i.name).trim();
+    if(name === "玩 30 分钟游戏") name = "玩 15 分钟游戏";   /* 老数据自动更新 */
+    return {
+      id: i.id || "g"+Math.random().toString(36).slice(2,8),
+      ic: (typeof i.ic === "string" && i.ic.trim()) ? i.ic : "🎁",
+      name: name,
+      cost: Math.max(1, Math.min(99999, Math.round(Number(i.cost)) || 60))
+    };
+  });
+}
+function normBad(arr, dels){
+  if(!Array.isArray(arr) || !arr.length) arr = DEFAULT_BADS.slice();
+  else{ /* 老数据自动补上后来新增的默认坏习惯（用户主动删过的不强加回来） */
+    const ids = arr.map(i=>i.id);
+    DEFAULT_BADS.forEach(d=>{ if(ids.indexOf(d.id)<0 && !(dels||[]).includes(d.id)) arr.push(d); });
+  }
   return arr.filter(i=>i && String(i.name||"").trim()).map(i=>({
-    id: i.id || "g"+Math.random().toString(36).slice(2,8),
-    ic: (typeof i.ic === "string" && i.ic.trim()) ? i.ic : "🎁",
+    id: i.id || "b"+Math.random().toString(36).slice(2,8),
+    ic: (typeof i.ic === "string" && i.ic.trim()) ? i.ic : "⚠️",
     name: String(i.name).trim(),
-    cost: Math.max(1, Math.min(99999, Math.round(Number(i.cost)) || 60))
+    cost: Math.max(1, Math.min(99999, Math.round(Number(i.cost)) || 5))
   }));
 }
 function load(){
@@ -589,7 +663,10 @@ function load(){
     lastCheckin: s.lastCheckin || null, ledger: s.ledger || [],
     custom: Array.isArray(s.custom) ? s.custom : [],
     ut: s.ut && typeof s.ut === "object" ? s.ut : {},
-    shop: normShop(s.shop)
+    shop: normShop(s.shop),
+    badItems: normBad(s.badItems, s.badDel),
+    bads: s.bads && typeof s.bads === "object" ? s.bads : {},
+    badDel: Array.isArray(s.badDel) ? s.badDel : []
   };
   const td = today();
   Object.keys(st.done).forEach(k=>{
@@ -658,7 +735,9 @@ function bump(){
 let curSubject = "zh";
 
 function renderPoints(){
-  document.getElementById("pointsNum").textContent = state.points;
+  const el = document.getElementById("pointsNum");
+  el.textContent = state.points;
+  el.style.color = state.points < 0 ? "#e85d04" : "";   /* 欠阳光标红提示 */
 }
 function renderSidebar(){
   const sb = document.getElementById("sidebar");
@@ -706,7 +785,7 @@ function renderUnits(){
       dl.onclick = (e)=>{ e.stopPropagation(); askDelTask(sub,g,it,it.t); };
       row.appendChild(dl);
       const coin = document.createElement("div");
-      coin.className = "coin"; coin.textContent = "+5 ☀️";
+      coin.className = "coin"; coin.textContent = "+"+TASK_POINT+" ☀️";
       row.appendChild(coin);
       row.onclick = ()=>toggleTask(key, sub, g, it);
       list.appendChild(row);
@@ -744,8 +823,8 @@ function toggleTask(key, sub, g, it){
 /* ---- 任务的新增 / 修改 / 删除（所有学科、所有单元通用） ---- */
 function askAddTask(sub, g){
   showPrompt("➕","新增一个任务",
-    g.custom ? "写下你想每天坚持的小任务，完成+5阳光～"
-             : "给「"+g.name+"」添加任务，孩子完成就+5阳光～","", v=>{
+    g.custom ? "写下你想每天坚持的小任务，完成+"+TASK_POINT+"阳光～"
+             : "给「"+g.name+"」添加任务，孩子完成就+"+TASK_POINT+"阳光～","", v=>{
     if(g.custom) state.custom.push({id: Date.now(), t: v});
     else effTasks(sub,g).push({id:"a"+Date.now(), t: v});
     save(); renderSidebar(); renderUnits(); toast("加好啦 ☀️");
@@ -841,6 +920,103 @@ function askBuy(item){
       renderPoints(); renderShop(); renderLedger(); renderStats();
     });
 }
+/* ---- 坏习惯：记录扣分 / 新增 / 修改 / 删除 ---- */
+function renderBad(){
+  const g = document.getElementById("badGrid");
+  g.innerHTML = "";
+  const t = today();
+  const rec = state.bads[t] || {};
+  state.badItems.forEach(item=>{
+    const d = document.createElement("div");
+    d.className = "bad-card";
+    const n = rec[item.id] || 0;
+    d.innerHTML = '<div class="g-ops">'+
+        '<div class="mini edit" title="修改这个坏习惯">✏️</div>'+
+        '<div class="mini del" title="删除这个坏习惯">✕</div></div>'+
+      '<div class="gic">'+item.ic+'</div><h3>'+item.name+'</h3>'+
+      '<div class="cost">'+item.cost+'</div>'+
+      '<div class="cnt">今天 '+n+' 次</div>'+
+      '<div class="hint">点一下＝记录一次并扣分</div>';
+    d.querySelector(".mini.edit").onclick = (e)=>{ e.stopPropagation(); askEditBad(item); };
+    d.querySelector(".mini.del").onclick = (e)=>{ e.stopPropagation(); askDelBad(item); };
+    d.onclick = ()=>tapBad(item);
+    g.appendChild(d);
+  });
+  renderBadTable();
+}
+function renderBadTable(){
+  const tb = document.getElementById("badBody");
+  const empty = document.getElementById("badEmpty");
+  const t = today();
+  if(!Object.keys(state.bads).length){ tb.innerHTML=""; empty.style.display="block"; return; }
+  empty.style.display="none";
+  let tN = 0, tC = 0, aN = 0, aC = 0;   /* 今日/累计 次数与扣分合计 */
+  const rows = state.badItems.map(i=>{
+    let dayN = 0, totN = 0;
+    Object.keys(state.bads).forEach(dt=>{
+      const n = (state.bads[dt][i.id] || 0);
+      if(dt === t) dayN = n;
+      totN += n;
+    });
+    tN += dayN; tC += dayN*i.cost; aN += totN; aC += totN*i.cost;
+    return '<tr><td style="font-weight:700;">'+i.ic+' '+i.name+'</td>'+
+      '<td style="text-align:center;">'+dayN+'</td>'+
+      '<td style="text-align:center; color:#e85d04;">-'+(dayN*i.cost)+'</td>'+
+      '<td style="text-align:center;">'+totN+'</td>'+
+      '<td style="text-align:right; color:#e85d04; font-weight:800;">-'+(totN*i.cost)+'</td></tr>';
+  }).join("");
+  tb.innerHTML = rows +
+    '<tr style="background:#fff3f6;font-weight:800;">'+
+    '<td>合计（今天 / 累计）</td>'+
+    '<td style="text-align:center;">'+tN+'</td>'+
+    '<td style="text-align:center; color:#e85d04;">-'+tC+'</td>'+
+    '<td style="text-align:center;">'+aN+'</td>'+
+    '<td style="text-align:right; color:#e85d04;">-'+aC+'</td></tr>';
+}
+function badTotalCost(){   /* 累计坏习惯扣分（按规则值） */
+  let sum = 0;
+  Object.keys(state.bads).forEach(dt=>{
+    const rec = state.bads[dt];
+    state.badItems.forEach(i=>{ sum += (rec[i.id]||0)*i.cost; });
+  });
+  return sum;
+}
+function tapBad(item){
+  const t = today();
+  const day = state.bads[t] = state.bads[t] || {};
+  day[item.id] = (day[item.id]||0) + 1;
+  state.points -= item.cost;   /* 阳光不够也照常扣，允许出现欠阳光 */
+  addLedger("坏习惯："+item.name+"（今天第"+day[item.id]+"次）", -item.cost);
+  save(); bump();
+  toast(state.points < 0
+    ? "记录一次「"+item.name+"」，阳光 -"+item.cost+"，现在欠 "+(-state.points)+" 阳光，快去挣回来！💪"
+    : "记录一次「"+item.name+"」，阳光 -"+item.cost+" 😤");
+  renderPoints(); renderBad(); renderLedger(); renderStats();
+}
+function askAddBad(){
+  showGoodsForm("➕","加一个坏习惯",
+    "想提醒孩子注意的坏习惯是什么？出现一次扣多少阳光？（由家长和孩子一起商量好）",
+    {name:"", cost:"", ic:""}, o=>{
+    state.badItems.push({id:"b"+Date.now(), ic:o.ic, name:o.name, cost:o.cost});
+    save(); renderBad(); renderStats(); toast("已添加，出现就轻轻点一下 😤");
+  }, {name:"坏习惯叫什么？比如：咬指甲", cost:"出现一次扣多少阳光？"});
+}
+function askEditBad(item){
+  showGoodsForm("✏️","修改坏习惯","改名称、扣分分值或图标都可以～",
+    {name:item.name, cost:item.cost, ic:item.ic}, o=>{
+    const x = state.badItems.find(i=>i.id===item.id);
+    if(x){ x.name = o.name; x.cost = o.cost; x.ic = o.ic; }
+    save(); renderBad(); renderStats(); toast("改好了 ✏️");
+  }, {name:"坏习惯叫什么？", cost:"出现一次扣多少阳光？"});
+}
+function askDelBad(item){
+  showConfirm("🗑️","删除「"+item.name+"」？",
+    "删除后不再提醒这个坏习惯（之前的统计记录会保留在账本里）。",()=>{
+    state.badItems = state.badItems.filter(i=>i.id!==item.id);
+    state.badDel.push(item.id);   /* 记住删除过，升级时不被自动加回 */
+    save(); renderBad(); renderStats(); toast("已删除");
+  });
+}
 function renderLedger(){
   const tb = document.getElementById("ledgerBody");
   const empty = document.getElementById("ledgerEmpty");
@@ -859,6 +1035,7 @@ function renderStats(){
   document.getElementById("statGrid").innerHTML =
     stat(doneCount+"/"+totalTasks,"完成任务")+stat(state.points,"当前阳光")+
     stat(state.totalEarned,"累计阳光")+stat(days,"打卡天数")+stat(state.streak,"连续天数")+
+    stat("-"+badTotalCost(),"坏习惯累计扣分")+
     stat(Math.round(doneCount/Math.max(totalTasks,1)*100)+"%","学习进度");
   function stat(a,b){ return '<div class="stat"><div class="big">'+a+'</div><div class="lbl">'+b+'</div></div>'; }
 }
@@ -873,7 +1050,8 @@ nameInput.addEventListener("input", ()=>{
 
 /* ============ 弹窗（确认 / 单行输入 / 奖励表单） ============ */
 let modalMode = "none", confirmCb = null, promptCb = null, goodsCb = null, selIc = "🎁";
-const ICONS = ["🎁","📺","🎮","🍿","🎬","🧸","🍦","🍰","🧁","🚲","🏀","⚽","🏊","🎨","🧩","📚","🦖","🚀","🎡","🐰","💻","🎤"];
+const ICONS = ["🎁","📺","🎮","🍿","🎬","🧸","🍦","🍰","🧁","🚲","🏀","⚽","🏊","🎨","🧩","📚","🦖","🚀","🎡","🐰","💻","🎤",
+  "😡","🗯️","🐌","😤","🤐","📵","🚫","🙈","💤"];
 function hideModal(){
   document.getElementById("modalMask").classList.remove("show");
   document.getElementById("mInput").style.display = "none";
@@ -902,7 +1080,8 @@ function showPrompt(ic, title, hint, prefill, cb){
   document.getElementById("modalMask").classList.add("show");
   setTimeout(()=>{ try{ inp.focus(); }catch(e){} }, 200);
 }
-function showGoodsForm(ic, title, hint, pre, cb){
+function showGoodsForm(ic, title, hint, pre, cb, ph){
+  ph = ph || {};
   hideModal();
   modalMode = "goods"; goodsCb = cb;
   selIc = ICONS.indexOf(pre.ic) > -1 ? pre.ic : ICONS[Math.floor(Math.random()*ICONS.length)];
@@ -912,10 +1091,11 @@ function showGoodsForm(ic, title, hint, pre, cb){
   const inp = document.getElementById("mInput");
   inp.style.display = "block";
   inp.value = pre.name || "";
-  inp.placeholder = "奖励叫什么？比如：买一个小玩具";
+  inp.placeholder = ph.name || "奖励叫什么？比如：买一个小玩具";
   const cost = document.getElementById("mCost");
   cost.style.display = "block";
   cost.value = (pre.cost !== "" && pre.cost != null) ? pre.cost : "";
+  cost.placeholder = ph.cost || "要花多少阳光？（比如 60）";
   const box = document.getElementById("mIcons");
   box.style.display = "flex";
   box.innerHTML = "";
@@ -963,7 +1143,7 @@ function exportData(){
   const blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "阳光学习工作台-"+state.name+"-"+today()+".json";
+  a.download = "学习积分平台-"+state.name+"-"+today()+".json";
   a.click(); URL.revokeObjectURL(a.href);
   toast("📦 记录已导出");
 }
@@ -993,14 +1173,14 @@ document.querySelectorAll("nav.tabs button").forEach(b=>{
   b.onclick = ()=>{
     document.querySelectorAll("nav.tabs button").forEach(x=>x.classList.remove("on"));
     b.classList.add("on");
-    ["study","shop","data"].forEach(t=>{
+    ["study","shop","bad","data"].forEach(t=>{
       document.getElementById("tab-"+t).style.display = (t===b.dataset.tab)?"":"none";
     });
   };
 });
 
 /* ============ 启动 ============ */
-renderPoints(); renderSidebar(); renderUnits(); renderCheckin(); renderShop(); renderLedger(); renderStats();
+renderPoints(); renderSidebar(); renderUnits(); renderCheckin(); renderShop(); renderBad(); renderLedger(); renderStats();
 </script>
 </body>
 </html>
