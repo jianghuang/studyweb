@@ -183,14 +183,59 @@
   }
   .bad-card .hint{font-size:12px; color:#a39d8e; margin-bottom:10px;}
   .ledger{margin-top:26px;}
-  .ledger h3{font-size:16px; margin-bottom:10px; display:flex; align-items:center; gap:6px;}
-  .ledger table{width:100%; border-collapse:collapse; background:#fff; border-radius:var(--r);
-    overflow:hidden; box-shadow:var(--shadow); font-size:14px;}
-  .ledger th{background:#ffe9c2; padding:10px 12px; text-align:left; font-size:13px;}
-  .ledger td{padding:10px 12px; border-top:2px solid #fdf3e0;}
-  .ledger tr.use td{color:#a39d8e;}
-  .ledger .earn{color:#4a8b1f; font-weight:800;}
-  .ledger .spend{color:#e85d04; font-weight:800;}
+  .ledger h3{font-size:16px; margin-bottom:12px; display:flex; align-items:center; gap:6px;}
+  .tbl-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:var(--r);
+    box-shadow:var(--shadow); background:#fff;}
+  .tbl-wrap table{width:100%; border-collapse:separate; border-spacing:0; background:#fff;
+    font-size:14px; min-width:560px;}
+  .tbl-wrap thead th{background:linear-gradient(135deg,#ffd166 0%,#ffb238 100%);
+    padding:12px 14px; text-align:left; font-size:13px; color:#7a4b00; letter-spacing:.5px;
+    white-space:nowrap;}
+  .tbl-wrap thead th:first-child{border-radius:var(--r) 0 0 0;}
+  .tbl-wrap thead th:last-child{border-radius:0 var(--r) 0 0;}
+  .tbl-wrap td{padding:11px 14px; border-top:1px dashed #f3e0bd; vertical-align:middle;}
+  .tbl-wrap tbody tr{transition:background .15s;}
+  .tbl-wrap tbody tr:nth-child(even){background:#fffdf6;}
+  .tbl-wrap tbody tr:hover{background:#fff3d9;}
+  .tbl-wrap tr.use td{color:#a39d8e;}
+  .tbl-wrap .earn{color:#4a8b1f; font-weight:800;}
+  .tbl-wrap .spend{color:#e85d04; font-weight:800;}
+  /* 日期双行 */
+  .led-date{white-space:nowrap; line-height:1.3;}
+  .led-date .d-num{font-weight:800; color:var(--ink); font-size:13.5px;}
+  .led-date .d-sub{font-size:11.5px; color:var(--ink-soft);}
+  .led-date .d-today{display:inline-block; font-size:10.5px; font-weight:800; color:#fff;
+    background:#f77f00; border-radius:999px; padding:1px 8px; margin-left:4px; vertical-align:1px;}
+  /* 类型徽章 */
+  .led-badge{display:inline-block; font-size:11.5px; font-weight:800; white-space:nowrap;
+    border-radius:999px; padding:3px 10px; border:2px solid transparent; line-height:1.4;}
+  .lb-task{background:#e9f7dd; color:#3d7a19; border-color:#c4ec9f;}
+  .lb-checkin{background:#fff1cc; color:#a06500; border-color:#ffd884;}
+  .lb-buy{background:#f3e8ff; color:#7b2fbf; border-color:#ddc2f5;}
+  .lb-bad{background:#ffe3ee; color:#c9184a; border-color:#ffc2d4;}
+  .lb-cancel{background:#f0f0f0; color:#8a8a8a; border-color:#d8d8d8;}
+  .lb-other{background:#e7f5ff; color:#1d6fa5; border-color:#b3d9f2;}
+  /* 阳光变化胶囊 */
+  .led-delta{display:inline-block; min-width:52px; text-align:center; font-weight:800;
+    font-size:13px; border-radius:999px; padding:3px 10px; white-space:nowrap;}
+  .led-delta.up{background:#e9f7dd; color:#3d7a19; border:2px solid #c4ec9f;}
+  .led-delta.down{background:#ffe3de; color:#d0342c; border:2px solid #ffb9ae;}
+  /* 余额 */
+  .led-balance{font-weight:800; font-size:14.5px; color:var(--ink); white-space:nowrap;}
+  .led-balance.neg{color:#d0342c;}
+  /* 摘要条 */
+  .led-sum{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:10px;}
+  .led-sum .chip{display:inline-block; font-size:12.5px; font-weight:700; border-radius:999px;
+    padding:5px 13px; background:#fff7ea; border:2px solid #ffe3c4; color:var(--ink-soft);}
+  .led-sum .chip b{color:var(--ink); font-weight:800;}
+  .led-sum .chip.up{background:#e9f7dd; border-color:#c4ec9f; color:#3d7a19;}
+  .led-sum .chip.down{background:#ffe3de; border-color:#ffb9ae; color:#d0342c;}
+  .led-filter{display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; margin-bottom:12px;}
+  .led-filter label{display:flex; flex-direction:column; gap:4px; font-size:12px; font-weight:800; color:#a39d8e;}
+  .led-filter select{padding:8px 10px; border:3px solid #ffd166; border-radius:12px;
+    font:inherit; font-size:14px; font-weight:700; background:#fffaf0; outline:none; min-width:110px;
+    cursor:pointer; transition:.15s;}
+  .led-filter select:focus{border-color:#f77f00; background:#fff4dd;}
   .empty{padding:26px; text-align:center; color:var(--ink-soft); font-size:14px;}
   /* ---------- 数据 ---------- */
   .data-card{
@@ -241,8 +286,8 @@
 <body>
 
 <header>
-  <div class="logo">🌈</div>
-  <div class="title">⭐ 学习积分平台</div>
+  <div class="logo">☀️</div>
+  <div class="title">学习积分平台</div>
   <div class="header-right">
     <div class="name-pill">🧒<input id="nameInput" maxlength="8" title="点击修改名字"></div>
     <div class="points-pill" id="pointsPill">☀️<span class="num" id="pointsNum">0</span><span style="font-size:13px;color:#a39d8e;">阳光</span></div>
@@ -283,12 +328,14 @@
     <button class="btn btn-ghost add-task" style="margin:2px 0 8px;" onclick="askAddGood()">➕ 给商店加一个新奖励</button>
     <div class="legend">👆 点“兑换”＝下单，记得找家长确认 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 加奖励</div>
     <div class="ledger">
-      <h3>📒 阳光账本</h3>
-      <table>
-        <thead><tr><th>时间</th><th>事情</th><th style="text-align:right;">阳光变化</th><th style="text-align:right;">余额</th></tr></thead>
-        <tbody id="ledgerBody"></tbody>
-      </table>
-      <div class="empty" id="ledgerEmpty" style="display:none;">还没有记录哦，快去完成任务攒阳光吧！☀️</div>
+      <h3>🎁 兑换记录</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>时间</th><th>兑换的奖励</th><th style="text-align:right;">花费阳光</th><th style="text-align:right;">当时余额</th></tr></thead>
+          <tbody id="redeemBody"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="redeemEmpty" style="display:none;">还没有兑换过奖励哦，攒够阳光来换吧！🎁</div>
     </div>
   </main>
 
@@ -303,16 +350,18 @@
     <div class="legend">👆 点卡片＝记录一次并扣分 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 加坏习惯</div>
     <div class="ledger">
       <h3>📊 坏习惯统计（按每一项，累计）</h3>
-      <table>
-        <thead><tr>
-          <th>坏习惯</th>
-          <th style="text-align:center;">今天次数</th>
-          <th style="text-align:center;">今天扣分</th>
-          <th style="text-align:center;">累计次数</th>
-          <th style="text-align:right;">累计扣分</th>
-        </tr></thead>
-        <tbody id="badBody"></tbody>
-      </table>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>坏习惯</th>
+            <th style="text-align:center;">今天次数</th>
+            <th style="text-align:center;">今天扣分</th>
+            <th style="text-align:center;">累计次数</th>
+            <th style="text-align:right;">累计扣分</th>
+          </tr></thead>
+          <tbody id="badBody"></tbody>
+        </table>
+      </div>
       <div class="empty" id="badEmpty" style="display:none;">还没有记录哦，继续保持！🌟</div>
     </div>
   </main>
@@ -322,6 +371,45 @@
     <div class="data-card">
       <h3>📊 我的小成绩</h3>
       <div class="stat-grid" id="statGrid"></div>
+    </div>
+    <div class="data-card">
+      <h3>📒 阳光账本</h3>
+      <div class="led-filter">
+        <label>日期
+          <select id="fDate">
+            <option value="all">全部</option>
+            <option value="today">今天</option>
+            <option value="d7">最近 7 天</option>
+            <option value="d30">最近 30 天</option>
+          </select>
+        </label>
+        <label>类型
+          <select id="fType">
+            <option value="all">全部</option>
+            <option value="task">✅ 完成任务</option>
+            <option value="checkin">🌞 每日打卡</option>
+            <option value="buy">🎁 兑换奖励</option>
+            <option value="bad">😤 坏习惯</option>
+            <option value="cancel">↩️ 取消任务</option>
+          </select>
+        </label>
+        <label>加减
+          <select id="fDelta">
+            <option value="all">全部</option>
+            <option value="plus">➕ 加阳光</option>
+            <option value="minus">➖ 扣阳光</option>
+          </select>
+        </label>
+        <button class="btn btn-ghost" style="margin-left:auto;" onclick="exportLedger()">📤 导出全部记录</button>
+      </div>
+      <div class="led-sum" id="ledSum" style="display:none;"></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>时间</th><th>事情</th><th>类型</th><th style="text-align:right;">阳光变化</th><th style="text-align:right;">余额</th></tr></thead>
+          <tbody id="ledgerBody"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="ledgerEmpty" style="display:none;">没有符合条件的记录哦 ☀️</div>
     </div>
     <div class="data-card">
       <h3>📤 导出数据</h3>
@@ -711,15 +799,31 @@ function materializeAll(st){
 }
 
 /* ============ 积分与账本 ============ */
-function addLedger(thing, delta){
-  state.ledger.unshift({time: today(), thing, delta, balance: state.points});
-  if(state.ledger.length > 200) state.ledger.length = 200;
+const LEDGER_MAX = 500;
+function ledType(r){
+  if(r.type) return r.type;
+  const s = r.thing || "";   /* 老数据无 type，按前缀推断 */
+  if(s.indexOf("完成任务")===0) return "task";
+  if(s.indexOf("取消任务")===0) return "cancel";
+  if(s.indexOf("每日打卡")===0) return "checkin";
+  if(s.indexOf("兑换奖励")===0) return "buy";
+  if(s.indexOf("坏习惯")===0) return "bad";
+  return "other";
 }
-function earn(n, thing){
+const LEDGER_TYPES = {task:"✅ 完成任务", cancel:"↩️ 取消任务", checkin:"🌞 每日打卡",
+  buy:"🎁 兑换奖励", bad:"😤 坏习惯", other:"📝 其他"};
+function addLedger(thing, delta, type){
+  if(!type){
+    type = ledType({thing, delta});
+  }
+  state.ledger.unshift({time: today(), thing, delta, balance: state.points, type});
+  if(state.ledger.length > LEDGER_MAX) state.ledger.length = LEDGER_MAX;
+}
+function earn(n, thing, type){
   state.points += n; state.totalEarned += n;
-  addLedger(thing, +n); save();
+  addLedger(thing, +n, type); save();
   toast("+"+n+" ☀️ "+thing); bump();
-  renderPoints(); renderShop(); renderLedger(); renderStats();
+  renderPoints(); renderShop(); renderLedger(); renderRedeem(); renderStats();
 }
 function toast(msg){
   const t = document.getElementById("toast");
@@ -809,11 +913,11 @@ function toggleTask(key, sub, g, it){
   if(state.done[key]){
     delete state.done[key];
     state.points -= TASK_POINT; state.totalEarned = Math.max(0, state.totalEarned - TASK_POINT);
-    addLedger("取消任务："+sub.name+"·"+g.name, -TASK_POINT);
+    addLedger("取消任务："+sub.name+"·"+g.name+"·"+it.t, -TASK_POINT, "cancel");
     save(); toast("已取消勾选，阳光 -"+TASK_POINT);
   }else{
     state.done[key] = true;
-    earn(TASK_POINT, "完成任务："+sub.name+"·"+g.name);
+    earn(TASK_POINT, "完成任务："+sub.name+"·"+g.name+"·"+it.t, "task");
     const items = effTasks(sub,g);
     const allDone = items.length>0 && items.every(x=>state.done[taskKeyOf(sub,g,x)]);
     if(allDone) toast("🎉 恭喜！这一组全部完成啦！");
@@ -861,7 +965,7 @@ document.getElementById("btnCheckin").onclick = ()=>{
   const gap = state.lastCheckin ? daysBetween(state.lastCheckin, t) : null;
   state.streak = (gap === 1) ? state.streak + 1 : 1;
   state.checkins[t] = true; state.lastCheckin = t;
-  earn(CHECKIN_POINT, "每日打卡（连续"+state.streak+"天）");
+  earn(CHECKIN_POINT, "每日打卡（连续"+state.streak+"天）", "checkin");
   renderCheckin();
   if(state.streak === 7) toast("🔥 连续打卡7天，太棒了！");
 };
@@ -915,9 +1019,9 @@ function askBuy(item){
     ()=>{
       if(state.points < item.cost){ toast("阳光不够，先攒一攒吧！"); return; }
       state.points -= item.cost;
-      addLedger("兑换奖励："+item.name, -item.cost);
+      addLedger("兑换奖励："+item.name, -item.cost, "buy");
       save(); toast("兑换成功！记得找家长确认 🎉");
-      renderPoints(); renderShop(); renderLedger(); renderStats();
+      renderPoints(); renderShop(); renderLedger(); renderRedeem(); renderStats();
     });
 }
 /* ---- 坏习惯：记录扣分 / 新增 / 修改 / 删除 ---- */
@@ -986,7 +1090,7 @@ function tapBad(item){
   const day = state.bads[t] = state.bads[t] || {};
   day[item.id] = (day[item.id]||0) + 1;
   state.points -= item.cost;   /* 阳光不够也照常扣，允许出现欠阳光 */
-  addLedger("坏习惯："+item.name+"（今天第"+day[item.id]+"次）", -item.cost);
+  addLedger("坏习惯："+item.name+"（今天第"+day[item.id]+"次）", -item.cost, "bad");
   save(); bump();
   toast(state.points < 0
     ? "记录一次「"+item.name+"」，阳光 -"+item.cost+"，现在欠 "+(-state.points)+" 阳光，快去挣回来！💪"
@@ -1017,16 +1121,83 @@ function askDelBad(item){
     save(); renderBad(); renderStats(); toast("已删除");
   });
 }
+const WEEK = ["周日","周一","周二","周三","周四","周五","周六"];
+function ledDateHtml(t){
+  const parts = t.split("-");
+  const d = new Date(Number(parts[0]), Number(parts[1])-1, Number(parts[2]));
+  const isToday = t === today();
+  return '<div class="led-date"><span class="d-num">'+parts[1]+'-'+parts[2]+'</span>'+
+    '<br><span class="d-sub">'+WEEK[d.getDay()]+'</span>'+
+    (isToday ? '<span class="d-today">今天</span>' : '')+'</div>';
+}
 function renderLedger(){
   const tb = document.getElementById("ledgerBody");
   const empty = document.getElementById("ledgerEmpty");
-  if(!state.ledger.length){ tb.innerHTML=""; empty.style.display="block"; return; }
+  const sum = document.getElementById("ledSum");
+  const fDate = document.getElementById("fDate").value;
+  const fType = document.getElementById("fType").value;
+  const fDelta = document.getElementById("fDelta").value;
+  const t = today();
+  const rows = state.ledger.filter(r=>{
+    if(fType !== "all" && ledType(r) !== fType) return false;
+    if(fDelta === "plus" && !(r.delta > 0)) return false;
+    if(fDelta === "minus" && !(r.delta < 0)) return false;
+    if(fDate === "today" && r.time !== t) return false;
+    if(fDate === "d7" || fDate === "d30"){
+      const gap = daysBetween(r.time, t);
+      if(gap === null || gap < 0 || gap >= (fDate==="d7"?7:30)) return false;
+    }
+    return true;
+  });
+  if(!rows.length){
+    tb.innerHTML=""; empty.style.display="block"; sum.style.display="none"; return;
+  }
   empty.style.display="none";
-  tb.innerHTML = state.ledger.map(r=>
-    '<tr class="'+(r.delta<0?"use":"")+'"><td>'+r.time+'</td><td>'+r.thing+'</td>'+
-    '<td style="text-align:right;" class="'+(r.delta<0?"spend":"earn")+'">'+
-    (r.delta>0?"+":"")+r.delta+'</td>'+
-    '<td style="text-align:right; font-weight:700;">'+r.balance+'</td></tr>').join("");
+  /* 摘要条：条数 + 加分合计 + 扣分合计 */
+  const plus = rows.reduce((n,r)=>n+(r.delta>0?r.delta:0),0);
+  const minus = rows.reduce((n,r)=>n+(r.delta<0?-r.delta:0),0);
+  sum.style.display="flex";
+  sum.innerHTML = '<span class="chip">📋 共 <b>'+rows.length+'</b> 条</span>'+
+    (plus>0 ? '<span class="chip up">➕ 加 <b>'+plus+'</b> ☀️</span>' : '')+
+    (minus>0 ? '<span class="chip down">➖ 扣 <b>'+minus+'</b> ☀️</span>' : '');
+  tb.innerHTML = rows.map(r=>{
+    const ty = ledType(r);
+    return '<tr class="'+(r.delta<0?"use":"")+'"><td>'+ledDateHtml(r.time)+'</td>'+
+      '<td>'+r.thing+'</td>'+
+      '<td><span class="led-badge lb-'+ty+'">'+(LEDGER_TYPES[ty]||"📝 其他")+'</span></td>'+
+      '<td style="text-align:right;"><span class="led-delta '+(r.delta<0?"down":"up")+'">'+
+      (r.delta>0?"+":"")+r.delta+'</span></td>'+
+      '<td style="text-align:right;"><span class="led-balance'+(r.balance<0?" neg":"")+'">'+r.balance+'</span></td></tr>';
+  }).join("");
+}
+/* 筛选条件变化时刷新 */
+["fDate","fType","fDelta"].forEach(id=>{
+  document.getElementById(id).addEventListener("change", renderLedger);
+});
+function renderRedeem(){
+  const tb = document.getElementById("redeemBody");
+  const empty = document.getElementById("redeemEmpty");
+  const rows = state.ledger.filter(r=>ledType(r)==="buy");
+  if(!rows.length){ tb.innerHTML=""; empty.style.display="block"; return; }
+  empty.style.display="none";
+  tb.innerHTML = rows.map(r=>
+    '<tr class="use"><td>'+ledDateHtml(r.time)+'</td><td>'+String(r.thing).replace(/^兑换奖励：/,"")+'</td>'+
+    '<td style="text-align:right;"><span class="led-delta down">'+r.delta+'</span></td>'+
+    '<td style="text-align:right;"><span class="led-balance'+(r.balance<0?" neg":"")+'">'+r.balance+'</span></td></tr>').join("");
+}
+function exportLedger(){
+  if(!state.ledger.length){ toast("还没有账本记录哦"); return; }
+  const esc = s=>'"'+String(s).replace(/"/g,'""')+'"';
+  const lines = ["日期,事项,类型,阳光变化,当时余额"];
+  state.ledger.slice().reverse().forEach(r=>{
+    lines.push([r.time, esc(r.thing), esc(LEDGER_TYPES[ledType(r)]||"其他"), r.delta, r.balance].join(","));
+  });
+  const blob = new Blob(["\uFEFF"+lines.join("\r\n")], {type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "阳光账本-"+state.name+"-"+today()+".csv";
+  a.click(); URL.revokeObjectURL(a.href);
+  toast("📤 账本已导出（共 "+state.ledger.length+" 条）");
 }
 function renderStats(){
   const totalTasks = SUBJECTS.reduce((n,s)=>n+subjGroups(s).reduce((m,g)=>m+effTasks(s,g).length,0),0);
@@ -1176,11 +1347,13 @@ document.querySelectorAll("nav.tabs button").forEach(b=>{
     ["study","shop","bad","data"].forEach(t=>{
       document.getElementById("tab-"+t).style.display = (t===b.dataset.tab)?"":"none";
     });
+    /* 学科导航只在「学习任务」页显示 */
+    document.getElementById("sidebar").style.display = (b.dataset.tab==="study") ? "" : "none";
   };
 });
 
 /* ============ 启动 ============ */
-renderPoints(); renderSidebar(); renderUnits(); renderCheckin(); renderShop(); renderBad(); renderLedger(); renderStats();
+renderPoints(); renderSidebar(); renderUnits(); renderCheckin(); renderShop(); renderBad(); renderLedger(); renderRedeem(); renderStats();
 </script>
 </body>
 </html>
