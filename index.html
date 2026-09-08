@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<title>学习积分平台</title>
+<html lang="zh-CN" data-page-node-id="N2j1dgYO5iSDKkHIktXvft">
+<head data-page-node-id="MTtFb1Mg6nb7rBD5onEphs">
+<meta charset="UTF-8" data-page-node-id="BtJTnlmU8ot80gaDFCAmeA">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" data-page-node-id="9mSaLfYEVM7fGlyCKMKbXx">
+<meta name="apple-mobile-web-app-capable" content="yes" data-page-node-id="Uue3Z1HSUF0m7wHFpu79DI">
+<title>⭐ 学习积分平台</title>
 <style>
   :root{
     --sun:#ffb703; --sun2:#ffd166; --sky:#8ecae6; --sky2:#bde0fe;
@@ -49,6 +49,14 @@
   .points-pill .num{color:#f77f00; font-size:20px; min-width:34px; text-align:right;}
   .points-pill.bump{animation:bump .45s ease;}
   @keyframes bump{30%{transform:scale(1.18) rotate(-2deg);}}
+  /* 云端同步状态小徽章 */
+  .sync-chip{
+    display:inline-flex; align-items:center; gap:4px; background:rgba(255,255,255,.92);
+    border-radius:999px; padding:6px 12px; font-weight:700; font-size:12.5px;
+    border:2px dashed #fff; box-shadow:var(--shadow); white-space:nowrap;
+  }
+  .sync-chip.ok{color:#2e7d32;}
+  .sync-chip.wait{color:#b26a00;}
   nav.tabs{width:100%; display:flex; gap:8px; margin-top:4px;}
   nav.tabs button{
     flex:1; max-width:180px; border:none; cursor:pointer; font:inherit; font-weight:700;
@@ -283,173 +291,200 @@
   }
 </style>
 </head>
-<body>
+<body data-page-node-id="0Hjzqfctk8awWUwlL5Iz6V">
 
-<header>
-  <div class="logo">☀️</div>
-  <div class="title">学习积分平台</div>
-  <div class="header-right">
-    <div class="name-pill">🧒<input id="nameInput" maxlength="8" title="点击修改名字"></div>
-    <div class="points-pill" id="pointsPill">☀️<span class="num" id="pointsNum">0</span><span style="font-size:13px;color:#a39d8e;">阳光</span></div>
+<header data-page-node-id="3HOvlmjq4sOE5qzTdmEQQe">
+  <div class="logo" data-page-node-id="7ywn71uv22apAXFHATAtXb">🌈</div>
+  <div class="title" data-page-node-id="3goQXTaULBWwnN5MNDQi0I">⭐ 学习积分平台</div>
+  <div class="header-right" data-page-node-id="q5ol7VxTtVl8YRY7tEe3jC">
+    <div class="name-pill" data-page-node-id="rntrdbG6X2qsE3SeP8y47q">🧒<input id="nameInput" maxlength="8" title="点击修改名字" data-page-node-id="b6I6uOPcBvLmfjpLkUDeuh"></div>
+    <div class="points-pill" id="pointsPill" data-page-node-id="wjuvBbrXvGrL6h3uzekHXA">☀️<span class="num" id="pointsNum" data-page-node-id="q9LLUyZRr7kYCtI72KTy6A">0</span><span style="font-size:13px;color:#a39d8e;" data-page-node-id="VesZBjPFrZ4CBdeKcHNn9S">阳光</span></div>
+    <span class="sync-chip" id="syncChip" style="display:none;" title="数据自动备份到服务器" data-page-node-id="lQVyaGZdXOFi5dSYHEp6sl"></span>
   </div>
-  <nav class="tabs">
-    <button class="on" data-tab="study">📚 学习任务</button>
-    <button data-tab="shop">🎁 阳光商店</button>
-    <button data-tab="bad">😤 坏习惯记录</button>
-    <button data-tab="data">💾 我的成长档案</button>
+  <nav class="tabs" data-page-node-id="FmoLTlJ5Ro3Ax7ww44vbyF">
+    <button class="on" data-tab="study" data-page-node-id="MrOADwTwYA07LjXcEWtaMQ">📚 学习任务</button>
+    <button data-tab="shop" data-page-node-id="X74fdsXZha4u42xgGdKwHK">🎁 阳光商店</button>
+    <button data-tab="bad" data-page-node-id="BpsDvISVl6YiTGtAHXXDEb">😤 坏习惯记录</button>
+    <button data-tab="data" data-page-node-id="55twWZleF5xX37ZujcF2YC">💾 我的成长档案</button>
   </nav>
 </header>
 
-<div class="layout">
-  <aside id="sidebar"><h3>📚 学科导航</h3></aside>
+<div class="layout" data-page-node-id="3bqm4cEV2lzyAJxQWNTHj3">
+  <aside id="sidebar" data-page-node-id="PcfIHzC65ZjJAt7tClKzUs"><h3 data-page-node-id="kgqgjxj47rajTA5K9IJeqC">📚 学科导航</h3></aside>
 
   <!-- 学习任务 -->
-  <main id="tab-study">
-    <div class="checkin-card">
-      <div class="sun-big">☀️</div>
-      <div class="checkin-info">
-        <h2 id="greet">你好呀，小朋友！</h2>
-        <p>每天完成学习后来打卡，攒够阳光去商店换奖励～</p>
-        <div class="streak">🔥 连续打卡 <span id="streakNum">0</span> 天</div>
+  <main id="tab-study" data-page-node-id="gNcpRNwUjDJYlYHCcJgxTP">
+    <div class="checkin-card" data-page-node-id="4d6YAwxNrvbHwHmpcbFtEb">
+      <div class="sun-big" data-page-node-id="kGQ1pI3fmF1sOSaqJI65El">☀️</div>
+      <div class="checkin-info" data-page-node-id="uHCtHJSlbD47rFVb1CVaQU">
+        <h2 id="greet" data-page-node-id="FRiomP3mH0Jc6y4vAYxmii">你好呀，小朋友！</h2>
+        <p data-page-node-id="EFjXCGzUIWJHxvXlIciItn">每天完成学习后来打卡，攒够阳光去商店换奖励～</p>
+        <div class="streak" data-page-node-id="rBWJjiwViKCQCGl24R2Sfe">🔥 连续打卡 <span id="streakNum" data-page-node-id="ti75ykVqmIVHTr3qCMS8hm">0</span> 天</div>
       </div>
-      <button class="btn btn-sun" id="btnCheckin">打卡 +10 ☀️</button>
+      <button class="btn btn-sun" id="btnCheckin" data-page-node-id="4asn946e632dy27LDHtJYE">打卡 +10 ☀️</button>
     </div>
-    <div class="legend">👆 点任务文字＝勾选完成 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 每个单元都能自己加新任务</div>
-    <div id="units"></div>
+    <div class="legend" data-page-node-id="IpLtHELM51wPyMrTZEioKi">👆 点任务文字＝勾选完成 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 每个单元都能自己加新任务</div>
+    <div id="units" data-page-node-id="HBYzWMDl64oQYPYn3ahP4n"></div>
   </main>
 
   <!-- 商店 -->
-  <main id="tab-shop" style="display:none;">
-    <div class="shop-note">
-      ⚠️ <b>小小约定：</b>商店里的奖励都要<b>先和爸爸妈妈商量好</b>才能兑换哦！平台只帮我们记账，
+  <main id="tab-shop" style="display:none;" data-page-node-id="y62FjeuLhxlnfo56iGjekv">
+    <div class="shop-note" data-page-node-id="PmGVhktP6QOOPpEno7zLeQ">
+      ⚠️ <b data-page-node-id="jE8yaxNvIU1pkVT5yUgunS">小小约定：</b>商店里的奖励都要<b data-page-node-id="GEnVPzQKAeLtiyEc2fwUr0">先和爸爸妈妈商量好</b>才能兑换哦！平台只帮我们记账，
       兑换成功后请找家长确认，再开心地领取奖励～ 💛
     </div>
-    <div class="shop-grid" id="shopGrid"></div>
-    <button class="btn btn-ghost add-task" style="margin:2px 0 8px;" onclick="askAddGood()">➕ 给商店加一个新奖励</button>
-    <div class="legend">👆 点“兑换”＝下单，记得找家长确认 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 加奖励</div>
-    <div class="ledger">
-      <h3>🎁 兑换记录</h3>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>时间</th><th>兑换的奖励</th><th style="text-align:right;">花费阳光</th><th style="text-align:right;">当时余额</th></tr></thead>
-          <tbody id="redeemBody"></tbody>
+    <div class="shop-grid" id="shopGrid" data-page-node-id="WcgZRdAMby6p0SOBexqWcf"></div>
+    <button class="btn btn-ghost add-task" style="margin:2px 0 8px;" onclick="askAddGood()" data-page-node-id="siCRzKKXC12wGWZj4fA5JL">➕ 给商店加一个新奖励</button>
+    <div class="legend" data-page-node-id="OzQoZYes1pTn0WT60ZGDO8">👆 点“兑换”＝下单，记得找家长确认 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 加奖励</div>
+    <div class="ledger" data-page-node-id="fsqocT7iKWzbyDop5lb4Z2">
+      <h3 data-page-node-id="SRkfi0yz2JMhubdFGG2Glu">🎁 兑换记录</h3>
+      <div class="tbl-wrap" data-page-node-id="ITXmkAUzAvfYqa7PXeuA36">
+        <table data-page-node-id="1ZKaKg5idEEv6oi9BRMepW">
+          <thead data-page-node-id="PDP9wKstYEH7V3jYYYpmoC"><tr data-page-node-id="vas2lE4ETZJwPYGiKJsGYg"><th data-page-node-id="QTQtuZM57Ar2vB9JCdQuLU">时间</th><th data-page-node-id="TNixbqNI29kvDOXjMW5HRz">兑换的奖励</th><th style="text-align:right;" data-page-node-id="Hf4HGW4ZpNrENtdijVU6zn">花费阳光</th><th style="text-align:right;" data-page-node-id="zuY7tp6EDfL5zDDai22fDA">当时余额</th></tr></thead>
+          <tbody id="redeemBody" data-page-node-id="sWtZJXPxeh0E9G6K74fBd8"></tbody>
         </table>
       </div>
-      <div class="empty" id="redeemEmpty" style="display:none;">还没有兑换过奖励哦，攒够阳光来换吧！🎁</div>
+      <div class="empty" id="redeemEmpty" style="display:none;" data-page-node-id="9hbZqvL76Q7q3cSsoZWkqC">还没有兑换过奖励哦，攒够阳光来换吧！🎁</div>
     </div>
   </main>
 
   <!-- 坏习惯 -->
-  <main id="tab-bad" style="display:none;">
-    <div class="shop-note">
-      😤 <b>坏习惯小警钟：</b>出现坏习惯，家长就点一下对应卡片记录并<b>扣阳光</b>。
+  <main id="tab-bad" style="display:none;" data-page-node-id="jBdAjdJZ8KMDfP2W1PZQgB">
+    <div class="shop-note" data-page-node-id="vKvqg2pVCJpaRcWmOhGk8g">
+      😤 <b data-page-node-id="PnsnHOLtHl3YgfBnIrfyhQ">坏习惯小警钟：</b>出现坏习惯，家长就点一下对应卡片记录并<b data-page-node-id="YMu4IEU55NxDZq3JiPYAYJ">扣阳光</b>。
       每天做了几次、扣了多少都会统计在下面的表里——知错能改，把阳光再挣回来就是好孩子！💪
     </div>
-    <div class="shop-grid" id="badGrid"></div>
-    <button class="btn btn-ghost add-task" style="margin:2px 0 8px;" onclick="askAddBad()">➕ 加一个要提醒的坏习惯</button>
-    <div class="legend">👆 点卡片＝记录一次并扣分 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 加坏习惯</div>
-    <div class="ledger">
-      <h3>📊 坏习惯统计（按每一项，累计）</h3>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr>
-            <th>坏习惯</th>
-            <th style="text-align:center;">今天次数</th>
-            <th style="text-align:center;">今天扣分</th>
-            <th style="text-align:center;">累计次数</th>
-            <th style="text-align:right;">累计扣分</th>
+    <div class="shop-grid" id="badGrid" data-page-node-id="LEHB9AskK41Wbc6O6u8qUf"></div>
+    <button class="btn btn-ghost add-task" style="margin:2px 0 8px;" onclick="askAddBad()" data-page-node-id="oDFm7Y3OR2OhETxUS1MH4E">➕ 加一个要提醒的坏习惯</button>
+    <div class="legend" data-page-node-id="X2SQoNP4WR2McaYDkckc4X">👆 点卡片＝记录一次并扣分 ｜ ✏️ 修改 ｜ ✕ 删除 ｜ ➕ 加坏习惯</div>
+    <div class="ledger" data-page-node-id="gAT3tuehjgHxpeOHMLayqu">
+      <h3 data-page-node-id="bGVeVnnj2tWyC4RsXLRXQl">📊 坏习惯统计（按每一项，累计）</h3>
+      <div class="tbl-wrap" data-page-node-id="YUACd9Uunqh1EkWqOkB0SJ">
+        <table data-page-node-id="dADEpuzDG6APBQLyd03jho">
+          <thead data-page-node-id="1XxwQ5EiLZOKYA7FEDsP0C"><tr data-page-node-id="CJF5FI4JfCVVpUC3snod9T">
+            <th data-page-node-id="vn7mEWClvPlddh7Dx0GdFF">坏习惯</th>
+            <th style="text-align:center;" data-page-node-id="ogjHxptdCzYteI7YYSwoEf">今天次数</th>
+            <th style="text-align:center;" data-page-node-id="ypIA3Yv2EtvvNcezC0jOsP">今天扣分</th>
+            <th style="text-align:center;" data-page-node-id="TB6TFaUOx6fjl65N0kzoPJ">累计次数</th>
+            <th style="text-align:right;" data-page-node-id="SWnKMSz9qQ4hzjGUqZaSD6">累计扣分</th>
           </tr></thead>
-          <tbody id="badBody"></tbody>
+          <tbody id="badBody" data-page-node-id="Knbl8B11BSacj5Y5kBH0Xb"></tbody>
         </table>
       </div>
-      <div class="empty" id="badEmpty" style="display:none;">还没有记录哦，继续保持！🌟</div>
+      <div class="empty" id="badEmpty" style="display:none;" data-page-node-id="IEUA8111rKEdy6ZEJRZ7bg">还没有记录哦，继续保持！🌟</div>
     </div>
   </main>
 
   <!-- 数据 -->
-  <main id="tab-data" style="display:none;">
-    <div class="data-card">
-      <h3>📊 我的小成绩</h3>
-      <div class="stat-grid" id="statGrid"></div>
-    </div>
-    <div class="data-card">
-      <h3>📒 阳光账本</h3>
-      <div class="led-filter">
-        <label>日期
-          <select id="fDate">
-            <option value="all">全部</option>
-            <option value="today">今天</option>
-            <option value="d7">最近 7 天</option>
-            <option value="d30">最近 30 天</option>
-          </select>
+  <main id="tab-data" style="display:none;" data-page-node-id="YRKjtcrBIykJ6rMwc6z0V9">
+    <div class="data-card" data-page-node-id="rBJ8P7MJa3WlbiXJJZvRZn">
+      <h3 data-page-node-id="pRR0pRCjQXH2PN0CylQ0v5">☁️ 云端备份（防丢数据）</h3>
+      <p style="font-size:13px;color:var(--ink-soft);margin-bottom:10px;line-height:1.6;" data-page-node-id="ghIQ8joTOV6pjEzpm2LaXE">云端开启后，每次操作都会<b data-page-node-id="p0CycfLjvFBAe0z9qDNifg">自动备份整份记录</b>。浏览器数据被清空也不用怕——重新打开页面会自动找回，还能多设备共用。支持两种方式（满足其一即自动启用，都不满足则纯本地）：<br data-page-node-id="nBPtCF3BQ8IgP9SKq0fA4J">① <b data-page-node-id="M1L38d529fxFugsb6XHsPF">GitHub 直存</b>：页面放任意静态托管（含 GitHub Pages）都能用、无需服务器，填好下面的仓库与令牌即可；<br data-page-node-id="Kw1Mx1fE2v5LR7fS8tzbI2">② <b data-page-node-id="2zg6vUlx3vbFupvag3GrVD">自建服务器</b>：页面由配套 Node 服务（sunshine-sync-server）提供时自动启用，无需填写。</p>
+      <div class="btn-line" style="flex-wrap:wrap;gap:8px;align-items:end;margin-bottom:8px;" data-page-node-id="n2tOuqUndsLatRrDfLiW9W">
+        <label style="flex:1;min-width:190px;font-size:12.5px;color:var(--ink-soft);font-weight:700;" data-page-node-id="I4XImFvDV3Q98QVg4HGwxh">GitHub 仓库（你的账号/仓库名）
+          <input id="ghRepo" placeholder="例如：yourname/sunshine-data" spellcheck="false" style="width:100%;padding:9px 12px;border:2.5px solid #ffd166;border-radius:12px;font:inherit;font-size:14px;outline:none;background:#fffaf0;margin-top:4px;" data-page-node-id="fBTEpnWdtwt0zZyjgZvRZq">
         </label>
-        <label>类型
-          <select id="fType">
-            <option value="all">全部</option>
-            <option value="task">✅ 完成任务</option>
-            <option value="checkin">🌞 每日打卡</option>
-            <option value="buy">🎁 兑换奖励</option>
-            <option value="bad">😤 坏习惯</option>
-            <option value="cancel">↩️ 取消任务</option>
-          </select>
+        <label style="flex:1;min-width:190px;font-size:12.5px;color:var(--ink-soft);font-weight:700;" data-page-node-id="0fNBdPjcPCCImbkW7FMhCR">访问令牌（github_pat_…）
+          <input id="ghToken" type="password" autocomplete="off" spellcheck="false" style="width:100%;padding:9px 12px;border:2.5px solid #ffd166;border-radius:12px;font:inherit;font-size:14px;outline:none;background:#fffaf0;margin-top:4px;" data-page-node-id="uHsgBCxb3D2m3IgODi22HR">
         </label>
-        <label>加减
-          <select id="fDelta">
-            <option value="all">全部</option>
-            <option value="plus">➕ 加阳光</option>
-            <option value="minus">➖ 扣阳光</option>
-          </select>
-        </label>
-        <button class="btn btn-ghost" style="margin-left:auto;" onclick="exportLedger()">📤 导出全部记录</button>
+        <button class="btn btn-buy" onclick="ghSaveCfg(true)" data-page-node-id="noQhaHHgiEQMwHsZtqnpTi">保存并测试</button>
+        <button class="btn btn-ghost" onclick="ghOff()" data-page-node-id="6pcVGLVbbRpRzyeKxZLwCb">停用云端</button>
       </div>
-      <div class="led-sum" id="ledSum" style="display:none;"></div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>时间</th><th>事情</th><th>类型</th><th style="text-align:right;">阳光变化</th><th style="text-align:right;">余额</th></tr></thead>
-          <tbody id="ledgerBody"></tbody>
+      <div id="ghStatus" style="font-size:13px;line-height:1.6;" data-page-node-id="nbVaPQAe0RuF3ZdjY7UUua"></div>
+      <details style="margin-top:10px;font-size:12.5px;color:var(--ink-soft);" data-page-node-id="T9E7rmJqAXSZi43zM9yntd">
+        <summary style="cursor:pointer;font-weight:700;" data-page-node-id="ZaP8IrrjFMFSOhotygAPQA">❓ 令牌怎么创建（只弄一次，约 2 分钟）</summary>
+        <p style="margin-top:6px;line-height:1.8;" data-page-node-id="0T4XHeC5DEFHMgQUVYJSLx">
+          1. 在 GitHub 建一个<b data-page-node-id="7p0UYQBuOYki0B6N1SmF8H">私有仓库</b>，专门存孩子数据（例如 sunshine-data）；<br data-page-node-id="ODkBcfAGltpSDfGTKmDkH2">
+          2. GitHub 右上角头像 → <b data-page-node-id="uCcCHO6mIWsZl3BXtjHlvD">Settings</b> → 左下角 <b data-page-node-id="FbCAX6WQs97Lt9nIqFEqc1">Developer settings</b> → <b data-page-node-id="YRS10vcIgk7bj5TudgcGHu">Fine-grained personal access tokens</b> → <b data-page-node-id="RFoszOVNWjytHGmOsaRaGH">Generate new token</b>；<br data-page-node-id="uTF6ZymGriHB9gVAzoz6Zh">
+          3. Repository access 选 <b data-page-node-id="PforihrxC2eDKRSVQhw7cP">Only select repositories</b>，勾选第 1 步的仓库；<br data-page-node-id="iUpfquL5D0ti2VF2UaMgQi">
+          4. Permissions → Repository permissions → <b data-page-node-id="G1oKrA8jxtuFhQcKbPsVME">Contents</b> 选 <b data-page-node-id="gFEbXibgG1yvnJVGFZ8zyI">Read and write</b>；<br data-page-node-id="zawOmSmoMGwuftpBphf1f7">
+          5. Generate token，把 <code style="background:#fff3d9;border-radius:6px;padding:0 5px;" data-page-node-id="vit0OrOgPirLSJ25FQ92hM">github_pat_…</code> 复制粘贴到上面输入框，点「保存并测试」。<br data-page-node-id="FdwldCHa0BKMww5Jbw0mJg">
+          <b style="color:#c9184a;" data-page-node-id="BKJEdztGGar678TKLH01CN">令牌只保存在这台设备的浏览器里，不会上传、也不会写进页面源码</b>；担心泄露时随时去 GitHub Revoke 后重新生成一个。
+        </p>
+      </details>
+    </div>
+    <div class="data-card" data-page-node-id="u4rAeH8fUQEwwbh5VOioCm">
+      <h3 data-page-node-id="8l4kN7oXQknBMM8bJ6rljE">📊 我的小成绩</h3>
+      <div class="stat-grid" id="statGrid" data-page-node-id="G10CiIlJfefZQFX47SIbfa"></div>
+    </div>
+    <div class="data-card" data-page-node-id="LHXBCHf4AgIr1gPCh5XEd3">
+      <h3 data-page-node-id="xAk5xKyRYgOZAtdJif8i8N">📒 阳光账本</h3>
+      <div class="led-filter" data-page-node-id="m6bXsTGLBngoU7TdAQDjq3">
+        <label data-page-node-id="xIYfe5Fr0Dbq7FEsi6u4EB">日期
+          <select id="fDate" data-page-node-id="MGx9DuOEYqrhakI4BLM1yp">
+            <option value="all" data-page-node-id="aZMMGqLLUR4AnWC9dOF0rB">全部</option>
+            <option value="today" data-page-node-id="Jk2WVxKJKw79WvCCBosxB7">今天</option>
+            <option value="d7" data-page-node-id="1DXVjkqgA7MxEJWPalZry4">最近 7 天</option>
+            <option value="d30" data-page-node-id="jpi8Fx4lKaXhvviGOkERBW">最近 30 天</option>
+          </select>
+        </label>
+        <label data-page-node-id="Pd1YOlf8BlX1Y8ngmCFCkP">类型
+          <select id="fType" data-page-node-id="ANyRUiCh17aRdrMWekG7pF">
+            <option value="all" data-page-node-id="ippKOCSURKAKRNDKlxw5rK">全部</option>
+            <option value="task" data-page-node-id="LM91moGjd6gf6GCsjr2IBW">✅ 完成任务</option>
+            <option value="checkin" data-page-node-id="EEoRU5xnZ1YC7vYp0FN3N7">🌞 每日打卡</option>
+            <option value="buy" data-page-node-id="4wHUBD23WMt6eWekZL51XJ">🎁 兑换奖励</option>
+            <option value="bad" data-page-node-id="KydCaaEGxkj4n0KpvMLefu">😤 坏习惯</option>
+            <option value="cancel" data-page-node-id="piNUEnYUttP3jmnN5Eyo5a">↩️ 取消任务</option>
+          </select>
+        </label>
+        <label data-page-node-id="AwaLBX0tXVPmGZbBZ8Ojwc">加减
+          <select id="fDelta" data-page-node-id="PMglfMPB8ut02EYFIGYhIv">
+            <option value="all" data-page-node-id="3cy6qhWnYWk4woYLZY6ez2">全部</option>
+            <option value="plus" data-page-node-id="ZGLHqGhfH7lUpvDhuOqcxc">➕ 加阳光</option>
+            <option value="minus" data-page-node-id="36Ewr8vmRmupCrWMIkVeZB">➖ 扣阳光</option>
+          </select>
+        </label>
+        <button class="btn btn-ghost" style="margin-left:auto;" onclick="exportLedger()" data-page-node-id="KtUZlD2XUpZhwsrTskEnPJ">📤 导出全部记录</button>
+      </div>
+      <div class="led-sum" id="ledSum" style="display:none;" data-page-node-id="7dTreX1eekSIZmdutSvehm"></div>
+      <div class="tbl-wrap" data-page-node-id="rWGaNocFf7ah4VycURs8Zk">
+        <table data-page-node-id="NznnrnhoT5XxwEFS0ltlHR">
+          <thead data-page-node-id="Oh16Et7vsVUhLo1e17AzPD"><tr data-page-node-id="aVyh9EDckuWLBhPYhc75et"><th data-page-node-id="ZMOAeaptw9j6GLyE1Ykwqk">时间</th><th data-page-node-id="rbh8Gw4TDD44T1AlFhxyJT">事情</th><th data-page-node-id="4V2V4ylY1JnmLps7SlYg10">类型</th><th style="text-align:right;" data-page-node-id="P4SVqOT9YngRKBUSMyNRHP">阳光变化</th><th style="text-align:right;" data-page-node-id="3Dvekz1sqCd22DGn8UOXCk">余额</th></tr></thead>
+          <tbody id="ledgerBody" data-page-node-id="g4p5cui3APlW4Bs9ga5nF1"></tbody>
         </table>
       </div>
-      <div class="empty" id="ledgerEmpty" style="display:none;">没有符合条件的记录哦 ☀️</div>
+      <div class="empty" id="ledgerEmpty" style="display:none;" data-page-node-id="LqaaSvGzuWwQzqrgiZghPr">没有符合条件的记录哦 ☀️</div>
     </div>
-    <div class="data-card">
-      <h3>📤 导出数据</h3>
-      <p>把学习记录保存成一个文件，换设备或备份时用得上。建议每周备份一次。</p>
-      <div class="btn-line">
-        <button class="btn btn-ghost" onclick="exportData()">📦 导出记录文件</button>
+    <div class="data-card" data-page-node-id="hthig0bCG6KJVdCFFBah2x">
+      <h3 data-page-node-id="TjVuLhiagDVnX1pb76FYwQ">📤 导出数据</h3>
+      <p data-page-node-id="Gb9aEcBCriEeOchsx0deIr">把学习记录保存成一个文件，换设备或备份时用得上。建议每周备份一次。</p>
+      <div class="btn-line" data-page-node-id="1YjPLdnd4benbafrRb4THQ">
+        <button class="btn btn-ghost" onclick="exportData()" data-page-node-id="iNsBg8nt13r6TNnBsZmgpb">📦 导出记录文件</button>
       </div>
     </div>
-    <div class="data-card">
-      <h3>📥 导入数据</h3>
-      <p>选择之前导出的记录文件，恢复所有学习进度和阳光积分。导入会<b>覆盖</b>当前数据，请小心操作。</p>
-      <div class="btn-line">
-        <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📂 选择文件导入</button>
-        <input type="file" id="importFile" accept=".json" style="display:none;">
+    <div class="data-card" data-page-node-id="lnPaPr4UAFDFFihpZ6e73U">
+      <h3 data-page-node-id="utN5cJYsyTpwBkZLH2uoF1">📥 导入数据</h3>
+      <p data-page-node-id="DnykiyCAxj4Guw8XUBrwTY">选择之前导出的记录文件，恢复所有学习进度和阳光积分。导入会<b data-page-node-id="vvDITsyHibZlosTuUT3oTs">覆盖</b>当前数据，请小心操作。</p>
+      <div class="btn-line" data-page-node-id="ZEJueizku9HNGThZ2P2RUD">
+        <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()" data-page-node-id="3Z6edNsqHpycoDqfqkNMwf">📂 选择文件导入</button>
+        <input type="file" id="importFile" accept=".json" style="display:none;" data-page-node-id="XfqeBLbHcACAXxjJDh8oKt">
       </div>
     </div>
-    <div class="data-card">
-      <h3>🗑️ 清空重来</h3>
-      <p>删除全部记录，从头开始（新学期可用）。此操作无法撤销，建议先导出备份。</p>
-      <div class="btn-line">
-        <button class="btn btn-warn" onclick="askReset()">🗑️ 清空所有数据</button>
+    <div class="data-card" data-page-node-id="nJ9gPdqm5wcA4VEmfJtb0F">
+      <h3 data-page-node-id="dWBj6aZPQ1mK0eh3in2AVl">🗑️ 清空重来</h3>
+      <p data-page-node-id="Tog10Xz8T2uQVAIwyJQxS8">删除全部记录，从头开始（新学期可用）。此操作无法撤销，建议先导出备份。</p>
+      <div class="btn-line" data-page-node-id="xkk0gIOuFSxriVZqOxZvRA">
+        <button class="btn btn-warn" onclick="askReset()" data-page-node-id="CpM5LF3iyHEWFMHx2DN7Hr">🗑️ 清空所有数据</button>
       </div>
     </div>
   </main>
 </div>
 
-<footer>完成一项任务 +5 阳光 ☀️ ｜ 每日打卡 +10 阳光 🌞 ｜ 坏习惯会扣阳光哦 ｜ 奖励兑换规则由家长和孩子提前约定</footer>
+<footer data-page-node-id="NCJIbXIMGlQkjEuFWy4cLo">完成一项任务 +5 阳光 ☀️ ｜ 每日打卡 +10 阳光 🌞 ｜ 坏习惯会扣阳光哦 ｜ 奖励兑换规则由家长和孩子提前约定</footer>
 
-<div class="toast" id="toast"></div>
-<div class="modal-mask" id="modalMask">
-  <div class="modal">
-    <div class="m-ic" id="mIcon">🎁</div>
-    <h3 id="mTitle"></h3>
-    <p id="mText"></p>
-    <input id="mInput" maxlength="30" placeholder="写个小任务，比如：练跳绳50个" style="display:none; width:100%; padding:12px 14px; border:3px solid #ffd166; border-radius:14px; font:inherit; font-size:15px; outline:none; margin-bottom:14px; box-sizing:border-box; background:#fffaf0;">
-    <input id="mCost" type="number" inputmode="numeric" min="1" max="99999" step="1" placeholder="要花多少阳光？（比如 60）" style="display:none; width:100%; padding:12px 14px; border:3px solid #ffd166; border-radius:14px; font:inherit; font-size:17px; outline:none; margin-bottom:10px; box-sizing:border-box; background:#fffaf0; text-align:center; font-weight:800;">
-    <div id="mIcons" class="icon-row" style="display:none;"></div>
-    <div class="row">
-      <button class="btn btn-ghost" id="mCancel">取消</button>
-      <button class="btn btn-buy" id="mOk">确定</button>
+<div class="toast" id="toast" data-page-node-id="0xZ8S4llI1ffe5nvRrqfBc"></div>
+<div class="modal-mask" id="modalMask" data-page-node-id="XTSoj4ygWD6lbOwcEp3sHH">
+  <div class="modal" data-page-node-id="W3qjcJSxMYdnrPvyEQxHQs">
+    <div class="m-ic" id="mIcon" data-page-node-id="FFLrBzL14pxGiFQnBTsJEK">🎁</div>
+    <h3 id="mTitle" data-page-node-id="aGRsSzyXGQ7OVKHELco3P7"></h3>
+    <p id="mText" data-page-node-id="GfBUK32lUaKYnlUdyd8dh2"></p>
+    <input id="mInput" maxlength="30" placeholder="写个小任务，比如：练跳绳50个" style="display:none; width:100%; padding:12px 14px; border:3px solid #ffd166; border-radius:14px; font:inherit; font-size:15px; outline:none; margin-bottom:14px; box-sizing:border-box; background:#fffaf0;" data-page-node-id="bN7ugHutCutYCTF0F9HkSM">
+    <input id="mCost" type="number" inputmode="numeric" min="1" max="99999" step="1" placeholder="要花多少阳光？（比如 60）" style="display:none; width:100%; padding:12px 14px; border:3px solid #ffd166; border-radius:14px; font:inherit; font-size:17px; outline:none; margin-bottom:10px; box-sizing:border-box; background:#fffaf0; text-align:center; font-weight:800;" data-page-node-id="RLSnMKt67l85GEExQSSyEL">
+    <div id="mIcons" class="icon-row" style="display:none;" data-page-node-id="j6nlGxIJ43G57TTU8DqI8T"></div>
+    <div class="row" data-page-node-id="0YGJMjbFTrLC0rKMwSLA0k">
+      <button class="btn btn-ghost" id="mCancel" data-page-node-id="OcCIgZyhKrwcLNv5a4Wznb">取消</button>
+      <button class="btn btn-buy" id="mOk" data-page-node-id="FwBFxbq0fwyQOBmPy8uLGn">确定</button>
     </div>
   </div>
 </div>
@@ -711,6 +746,271 @@ const DEFAULT_BADS = [
 const TASK_POINT = 5, CHECKIN_POINT = 10;
 const KEY = "sunshine-desk-v1";
 
+/* ============ 云端同步（可选，不影响纯本地使用） ============
+ * 目的：防止浏览器数据被清空丢失。每次操作后自动把整份记录备份到“云端”，
+ *      浏览器被清空后重开页面即可自动找回；iPad/手机/电脑可共用同一份记录。
+ *
+ * 两种云端方式（自动选择其一，都不满足 = 纯本地，与旧版完全一致）：
+ *  A. GitHub 直存 —— 页面可放任意静态托管（含 GitHub Pages），无需自建服务器：
+ *     在「我的成长档案 → ☁️ 云端备份」填仓库与令牌（令牌只存在本机浏览器、
+ *     不会写进 HTML）。前端直接调 GitHub Contents API，把数据写成仓库里的
+ *     data/<孩子名>.json。
+ *  B. 自建服务器 —— 页面由仓库内 server.js（Node 零依赖）提供时自动启用，
+ *     数据存服务器 data/ 目录。
+ * 部署服务器时请在 server.js 同级放本页（public/index.html）。 */
+const SYNC_KEY = "sunshine-sync-meta-v1";
+const WIPE_KEY = "sunshine-wipe-v1";
+const GH_KEY   = "sunshine-gh-v1";
+const GH_API   = "https://api.github.com";
+let B = "none";          /* 后端：gh=GitHub直存  server=自建服务器  none=纯本地 */
+let svBase = "";         /* 自建服务器地址（页面同源） */
+let syncTimer = null;
+const syncMeta = { syncedAt: 0, dirty: false, ever: false };
+function metaRead(){
+  try{
+    const m = JSON.parse(localStorage.getItem(SYNC_KEY) || "null");
+    if(m && typeof m === "object"){
+      syncMeta.syncedAt = m.syncedAt || 0;
+      syncMeta.dirty = !!m.dirty;
+      syncMeta.ever = !!m.ever;
+    }
+  }catch(e){}
+}
+function metaWrite(){
+  try{ localStorage.setItem(SYNC_KEY, JSON.stringify(syncMeta)); }catch(e){}
+}
+function ghCfg(){
+  try{ return JSON.parse(localStorage.getItem(GH_KEY) || "null") || {}; }catch(e){ return {}; }
+}
+function ghReady(){ const c = ghCfg(); return !!(c.owner && c.repo && c.token); }
+function cloudOn(){ return B === "gh" || B === "server"; }
+function syncOn(){ return cloudOn(); }
+function chip(txt, cls){
+  const c = document.getElementById("syncChip");
+  if(!c) return;
+  if(!cloudOn()){ c.style.display = "none"; return; }
+  c.style.display = "";
+  c.className = "sync-chip " + (cls || "");
+  c.textContent = txt;
+}
+function localEmpty(){
+  if(!state) return true;
+  return (state.ledger||[]).length === 0 && !state.points && !state.totalEarned &&
+    Object.keys(state.done||{}).length === 0 &&
+    Object.keys(state.checkins||{}).length === 0 &&
+    Object.keys(state.bads||{}).length === 0 &&
+    (!state.custom || state.custom.length === 0);
+}
+function adoptServer(s){   /* 用云端数据覆盖本机 state */
+  try{
+    state.name = s.name || "小朋友";
+    state.points = (typeof s.points === "number") ? s.points : 0;
+    state.totalEarned = s.totalEarned || 0;
+    state.done = s.done || {};
+    state.checkins = s.checkins || {};
+    state.streak = s.streak || 0;
+    state.lastCheckin = s.lastCheckin || null;
+    state.ledger = s.ledger || [];
+    state.custom = Array.isArray(s.custom) ? s.custom : [];
+    if(s.ut && typeof s.ut === "object") state.ut = s.ut;
+    state.shop = normShop(s.shop);
+    state.badItems = normBad(s.badItems, s.badDel);
+    state.bads = (s.bads && typeof s.bads === "object") ? s.bads : {};
+    state.badDel = Array.isArray(s.badDel) ? s.badDel : [];
+    materializeAll(state);
+  }catch(e){}
+}
+function adoptAndReload(st, svAt){
+  adoptServer(st);
+  localStorage.setItem(KEY, JSON.stringify(state));
+  syncMeta.syncedAt = svAt || Date.now();
+  syncMeta.dirty = false; metaWrite();
+  chip("☁️ 已从云端恢复", "ok");
+  location.reload();
+}
+/* ================= 后端选择 ================= */
+async function decideBackend(){
+  if(ghReady()){ B = "gh"; return; }
+  if(location.protocol !== "http:" && location.protocol !== "https:"){ B = "none"; return; }
+  svBase = location.origin;
+  try{
+    const ctl = new AbortController();
+    const to = setTimeout(()=>ctl.abort(), 1500);
+    const r = await fetch(svBase + "/api/ping", {cache:"no-store", signal: ctl.signal});
+    clearTimeout(to);
+    if(r.ok){
+      const j = await r.json().catch(()=>null);
+      if(j && j.ok){ B = "server"; return; }
+    }
+  }catch(e){}
+  B = "none";
+  chip("", "");
+}
+/* ================= 后端 A：自建服务器 ================= */
+function svUrl(name){ return svBase + "/api/state?name=" + encodeURIComponent(name); }
+async function svFetch(){
+  try{
+    const r = await fetch(svUrl(state.name), {cache:"no-store"});
+    if(r.status === 404) return null;
+    if(!r.ok) throw 0;
+    const d = await r.json();
+    return { state: d.state, updatedAt: d.updatedAt || 0 };
+  }catch(e){ throw 0; }
+}
+async function svPut(keepalive){
+  const r = await fetch(svUrl(state.name), {method:"PUT",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify(state), keepalive: !!keepalive});
+  if(!r.ok) throw 0;
+  return r.json();
+}
+async function svDelete(){
+  const r = await fetch(svUrl(state.name), {method:"DELETE", keepalive:true});
+  if(!r.ok) throw 0;
+}
+/* ================= 后端 B：GitHub 直存 ================= */
+function ghBase(){ const c = ghCfg();
+  return GH_API + "/repos/" + encodeURIComponent(c.owner) + "/" + encodeURIComponent(c.repo); }
+function ghFileUrl(){ return ghBase() + "/contents/data/" + encodeURIComponent(state.name + ".json"); }
+async function ghReq(method, url, body){
+  const c = ghCfg();
+  const opt = { method, headers: {
+    "Accept": "application/vnd.github+json",
+    "Authorization": "Bearer " + c.token,
+    "X-GitHub-Api-Version": "2022-11-28" } };
+  if(body) opt.body = JSON.stringify(body);
+  const r = await fetch(url, opt);
+  return r;
+}
+async function ghErrMsg(r){
+  try{ const j = await r.json(); return j.message || ("HTTP " + r.status); }
+  catch(e){ return "HTTP " + r.status; }
+}
+function b64Encode(str){
+  const b = new TextEncoder().encode(str);
+  let s = ""; const CH = 0x8000;
+  for(let i = 0; i < b.length; i += CH) s += String.fromCharCode.apply(null, b.subarray(i, i + CH));
+  return btoa(s);
+}
+function b64Decode(s){
+  const bin = atob(s);
+  const u = new Uint8Array(bin.length);
+  for(let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+  return new TextDecoder("utf-8").decode(u);
+}
+async function ghGetFile(){
+  const r = await ghReq("GET", ghFileUrl());
+  if(r.status === 404) return null;
+  if(!r.ok) throw new Error(await ghErrMsg(r));
+  return r.json();
+}
+async function ghCommitDate(){
+  try{
+    const path = "data/" + state.name + ".json";
+    const r = await ghReq("GET", ghBase() + "/commits?path=" + encodeURIComponent(path) + "&per_page=1");
+    if(!r.ok) return 0;
+    const a = await r.json();
+    const t = a && a[0] && a[0].commit && a[0].commit.committer && a[0].commit.committer.date;
+    return t ? Date.parse(t) : 0;
+  }catch(e){ return 0; }
+}
+async function ghFetch(){           /* -> {state, updatedAt} | null */
+  const f = await ghGetFile();
+  if(!f) return null;
+  let st = null;
+  try{ st = JSON.parse(b64Decode(f.content)); }catch(e){ throw new Error("云端文件内容无法解析，请检查 data/" + state.name + ".json"); }
+  return { state: st, updatedAt: await ghCommitDate() };
+}
+async function ghSave(){
+  const body = JSON.stringify(state);
+  let sha = null;
+  const f0 = await ghGetFile();
+  if(f0) sha = f0.sha;
+  const doPut = (s)=>ghReq("PUT", ghFileUrl(), {
+      message: "💾 学习积分平台自动保存",
+      content: b64Encode(body),
+      ...(s ? { sha: s } : {}) });
+  let r = await doPut(sha);
+  if(r.status === 422){            /* sha 过期（别的设备刚写过）→ 重取一次再存 */
+    const f1 = await ghGetFile();
+    if(f1) sha = f1.sha;
+    r = await doPut(sha);
+  }
+  if(!r.ok) throw new Error(await ghErrMsg(r));
+  const j = await r.json().catch(()=>null);
+  if(j && j.content && j.content.sha) sha = j.content.sha;
+  return { updatedAt: Date.now() };
+}
+async function ghDelete(){
+  const f = await ghGetFile();
+  if(!f) return;
+  const r = await ghReq("DELETE", ghFileUrl(), { message: "🗑️ 清空记录", sha: f.sha });
+  if(!r.ok) throw new Error(await ghErrMsg(r));
+}
+/* ================= 通用：删除云端 / 推送 / 启动同步 ================= */
+function deleteRemote(){ return (B === "gh") ? ghDelete() : svDelete(); }
+function pushSync(force){
+  if(!cloudOn() || !state) return;
+  metaRead();
+  if(!syncMeta.dirty && !force) return;
+  chip("☁️ 同步中…", "wait");
+  const p = (B === "gh") ? ghSave() : svPut(false);
+  p.then(d=>{
+      metaRead();
+      syncMeta.syncedAt = (d && d.updatedAt) || Date.now();
+      syncMeta.dirty = false; metaWrite();
+      chip("☁️ 已同步", "ok");
+    })
+    .catch(()=>{ chip("☁️ 待同步", "wait"); /* 离线/失败：保留 dirty，下次自动重试 */ });
+}
+function flushSync(){              /* 页面隐藏/关闭前的尽力上传 */
+  if(!cloudOn() || !state) return;
+  metaRead(); if(!syncMeta.dirty) return;
+  const p = (B === "gh") ? ghSave() : svPut(true);
+  p.then(()=>{ syncMeta.dirty = false; metaWrite(); }).catch(()=>{});
+}
+async function startSync(){
+  await decideBackend();
+  fillGhCard();                    /* 刷新「云端备份」设置卡的状态文案 */
+  if(!cloudOn()) return;
+  metaRead(); syncMeta.ever = true; metaWrite();
+  chip("☁️ 同步中…", "wait");
+  const name = state.name;
+  /* 有「清空重来」标记：先删云端旧档，避免又自动恢复（失败则本会话不拉取，留待联网重试） */
+  if(localStorage.getItem(WIPE_KEY) === name){
+    let okDel = false;
+    try{ await deleteRemote(); okDel = true; }catch(e){}
+    if(okDel) localStorage.removeItem(WIPE_KEY);
+    else { chip("☁️ 待同步", "wait"); return; }
+  }
+  let remote = null;
+  try{ remote = (B === "gh") ? await ghFetch() : await svFetch(); }
+  catch(e){ chip(syncMeta.dirty ? "☁️ 待同步" : "", syncMeta.dirty ? "wait" : ""); return; }
+  if(!remote){                     /* 云端还没有这份记录 */
+    if(!localEmpty()) pushSync(true);
+    else chip("☁️ 已同步", "ok");
+    return;
+  }
+  const st = remote.state, svAt = remote.updatedAt || 0;
+  if(!st) return;
+  if(localEmpty()){                /* 浏览器被清空/换设备 → 直接找回云端数据 */
+    adoptAndReload(st, svAt);
+    return;
+  }
+  metaRead();
+  if(syncMeta.dirty){              /* 本机有未同步的修改 → 以本机为准，覆盖云端 */
+    pushSync(true);
+    return;
+  }
+  if(svAt > (syncMeta.syncedAt || 0)){  /* 云端更新（别处也操作过）→ 采用云端版 */
+    adoptAndReload(st, svAt);
+    return;
+  }
+  chip("☁️ 已同步", "ok");
+}
+
+
+
 /* ============ 数据 ============ */
 let state = load();
 function normShop(arr){
@@ -763,7 +1063,15 @@ function load(){
   });
   return materializeAll(st);
 }
-function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+function save(){
+  localStorage.setItem(KEY, JSON.stringify(state));
+  if(syncOn()){                    /* 云同步：有修改就延时推送，避免频繁请求 */
+    metaRead(); syncMeta.dirty = true; metaWrite();
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(()=>pushSync(false), 900);
+    chip("☁️ 待同步", "wait");
+  }
+}
 function today(){ const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function daysBetween(a,b){
   if(!a||!b) return null;
@@ -1327,6 +1635,9 @@ document.getElementById("importFile").addEventListener("change", e=>{
       if(typeof s.points !== "number") throw 0;
       showConfirm("📥","导入这份记录？","将用「"+(s.name||"小朋友")+"」的记录覆盖当前数据。",()=>{
         localStorage.setItem(KEY, JSON.stringify(s));
+        if(syncOn()){            /* 导入即视为本机最新，重启后自动覆盖到云端 */
+          syncMeta.syncedAt = 0; syncMeta.dirty = true; syncMeta.ever = true; metaWrite();
+        }
         location.reload();
       });
     }catch(err){ toast("文件格式不对哦"); }
@@ -1335,7 +1646,12 @@ document.getElementById("importFile").addEventListener("change", e=>{
 });
 function askReset(){
   showConfirm("🗑️","清空所有数据？","所有任务进度、阳光和账本都会被删除，<b>无法恢复</b>！建议先导出备份。",()=>{
-    localStorage.removeItem(KEY); location.reload();
+    localStorage.removeItem(KEY);
+    if(syncOn()){                  /* 云同步时：记下「清空」标记，联网后连云端旧档一起删 */
+      localStorage.removeItem(SYNC_KEY);
+      localStorage.setItem(WIPE_KEY, state.name);
+    }
+    location.reload();
   });
 }
 
@@ -1352,8 +1668,87 @@ document.querySelectorAll("nav.tabs button").forEach(b=>{
   };
 });
 
+/* ============ 云端备份设置卡（成长档案页） ============ */
+function ghStatusLine(html){
+  const el = document.getElementById("ghStatus");
+  if(el) el.innerHTML = html;
+}
+function ghCfgSet(o){
+  try{ localStorage.setItem(GH_KEY, JSON.stringify(o)); }catch(e){}
+}
+async function ghSaveCfg(runTest){
+  const raw = (document.getElementById("ghRepo").value || "").trim()
+    .replace(/^https?:\/\/[^\/]+\//, "").replace(/\.git$/, "");
+  const token = (document.getElementById("ghToken").value || "").trim();
+  const parts = raw.split("/").filter(Boolean);
+  if(parts.length < 2 || !token){
+    ghStatusLine("⚠️ 请填写完整：GitHub 仓库（你的账号/仓库名）和访问令牌。");
+    return;
+  }
+  ghCfgSet({ owner: parts[0].trim(), repo: parts[1].trim(), token: token });
+  if(runTest){
+    ghStatusLine("⏳ 正在连接 GitHub 测试…");
+    try{
+      const f = await ghFetch();
+      B = "gh"; chip("☁️ 已同步", "ok");
+      if(f){
+        const when = new Date(f.updatedAt);
+        ghStatusLine("✅ 连接成功！云端已有一份记录（上次更新 " + when.toLocaleString() + "）。"
+          + (localEmpty() ? " 本机为空，将采用云端记录，页面即将刷新…" : "")
+          + " 从现在起每次操作都会自动备份到 data/" + state.name + ".json");
+        if(localEmpty()) adoptAndReload(f.state, f.updatedAt);
+      }else{
+        ghStatusLine("✅ 连接成功！云端还没有记录，下次操作后会自动创建 data/" + state.name + ".json。");
+        if(!localEmpty()) pushSync(true);
+      }
+    }catch(e){
+      B = "none"; chip("", "");
+      ghStatusLine("❌ 连接失败：" + (e && e.message || e)
+        + "。请检查：① 令牌是否选了 <b>Contents → Read and write</b>；② 仓库名是否填成 账号/仓库名；③ 仓库是否勾选进令牌的 Repository access。");
+    }
+  }else{
+    B = "gh"; chip("☁️ 已同步", "ok");
+    ghStatusLine("✅ 已保存。云端备份将自动启用，从现在起每次操作都会自动备份。");
+    if(!localEmpty()) pushSync(true);
+  }
+}
+function ghOff(){
+  localStorage.removeItem(GH_KEY);
+  B = "none"; chip("", "");
+  document.getElementById("ghToken").value = "";
+  ghStatusLine("已停用 GitHub 直存。本机数据仍然安全（保存在浏览器 localStorage），刷新后生效。");
+}
+function fillGhCard(){
+  const c = ghCfg();
+  if(c.owner && c.repo){
+    const a = document.getElementById("ghRepo");
+    if(a && !a.value) a.value = c.owner + "/" + c.repo;
+  }
+  const t = document.getElementById("ghToken");
+  if(t && c.token && !t.value) t.value = c.token;
+  if(ghReady()) ghStatusLine("☁️ <b>GitHub 直存已启用</b>：仓库 " + c.owner + "/" + c.repo
+    + "，每次操作自动备份到 <code>data/" + state.name + ".json</code>。");
+  else if(B === "server") ghStatusLine("☁️ 正在使用<b>自建服务器</b>备份（自动检测到配套服务），无需配置。");
+  else if(B === "none") ghStatusLine("当前为<b>纯本地模式</b>：数据只存在本机浏览器。启用上方任意一种云端方式即可防丢。");
+}
+
 /* ============ 启动 ============ */
 renderPoints(); renderSidebar(); renderUnits(); renderCheckin(); renderShop(); renderBad(); renderLedger(); renderRedeem(); renderStats();
+chip("", "");            /* 非云端模式下隐藏同步徽章 */
+fillGhCard();
+startSync();
+/* 页面隐藏/关闭前，把还没同步的修改尽力发出去 */
+window.addEventListener("pagehide", flushSync);
+/* 断网后恢复联网时，自动补传 */
+window.addEventListener("online", ()=>{
+  if(!cloudOn()) return;
+  metaRead();
+  if(syncMeta.dirty){
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(()=>pushSync(true), 500);
+  }
+});
+
 </script>
 </body>
 </html>
