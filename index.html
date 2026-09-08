@@ -379,7 +379,6 @@
   <main id="tab-data" style="display:none;" data-page-node-id="YRKjtcrBIykJ6rMwc6z0V9">
     <div class="data-card" data-page-node-id="rBJ8P7MJa3WlbiXJJZvRZn">
       <h3 data-page-node-id="pRR0pRCjQXH2PN0CylQ0v5">☁️ 云端备份（防丢数据）</h3>
-      <p style="font-size:13px;color:var(--ink-soft);margin-bottom:10px;line-height:1.6;" data-page-node-id="ghIQ8joTOV6pjEzpm2LaXE">云端开启后，每次操作都会<b data-page-node-id="p0CycfLjvFBAe0z9qDNifg">自动备份整份记录</b>。浏览器数据被清空也不用怕——重新打开页面会自动找回，还能多设备共用。支持两种方式（满足其一即自动启用，都不满足则纯本地）：<br data-page-node-id="nBPtCF3BQ8IgP9SKq0fA4J">① <b data-page-node-id="M1L38d529fxFugsb6XHsPF">GitHub 直存</b>：页面放任意静态托管（含 GitHub Pages）都能用、无需服务器，填好下面的仓库与令牌即可；<br data-page-node-id="Kw1Mx1fE2v5LR7fS8tzbI2">② <b data-page-node-id="2zg6vUlx3vbFupvag3GrVD">自建服务器</b>：页面由配套 Node 服务（sunshine-sync-server）提供时自动启用，无需填写。</p>
       <div class="btn-line" style="flex-wrap:wrap;gap:8px;align-items:end;margin-bottom:8px;" data-page-node-id="n2tOuqUndsLatRrDfLiW9W">
         <label style="flex:1;min-width:190px;font-size:12.5px;color:var(--ink-soft);font-weight:700;" data-page-node-id="I4XImFvDV3Q98QVg4HGwxh">GitHub 仓库（你的账号/仓库名）
           <input id="ghRepo" placeholder="例如：yourname/sunshine-data" spellcheck="false" style="width:100%;padding:9px 12px;border:2.5px solid #ffd166;border-radius:12px;font:inherit;font-size:14px;outline:none;background:#fffaf0;margin-top:4px;" data-page-node-id="fBTEpnWdtwt0zZyjgZvRZq">
@@ -391,17 +390,6 @@
         <button class="btn btn-ghost" onclick="ghOff()" data-page-node-id="6pcVGLVbbRpRzyeKxZLwCb">停用云端</button>
       </div>
       <div id="ghStatus" style="font-size:13px;line-height:1.6;" data-page-node-id="nbVaPQAe0RuF3ZdjY7UUua"></div>
-      <details style="margin-top:10px;font-size:12.5px;color:var(--ink-soft);" data-page-node-id="T9E7rmJqAXSZi43zM9yntd">
-        <summary style="cursor:pointer;font-weight:700;" data-page-node-id="ZaP8IrrjFMFSOhotygAPQA">❓ 令牌怎么创建（只弄一次，约 2 分钟）</summary>
-        <p style="margin-top:6px;line-height:1.8;" data-page-node-id="0T4XHeC5DEFHMgQUVYJSLx">
-          1. 在 GitHub 建一个<b data-page-node-id="7p0UYQBuOYki0B6N1SmF8H">私有仓库</b>，专门存孩子数据（例如 sunshine-data）；<br data-page-node-id="ODkBcfAGltpSDfGTKmDkH2">
-          2. GitHub 右上角头像 → <b data-page-node-id="uCcCHO6mIWsZl3BXtjHlvD">Settings</b> → 左下角 <b data-page-node-id="FbCAX6WQs97Lt9nIqFEqc1">Developer settings</b> → <b data-page-node-id="YRS10vcIgk7bj5TudgcGHu">Fine-grained personal access tokens</b> → <b data-page-node-id="RFoszOVNWjytHGmOsaRaGH">Generate new token</b>；<br data-page-node-id="uTF6ZymGriHB9gVAzoz6Zh">
-          3. Repository access 选 <b data-page-node-id="PforihrxC2eDKRSVQhw7cP">Only select repositories</b>，勾选第 1 步的仓库；<br data-page-node-id="iUpfquL5D0ti2VF2UaMgQi">
-          4. Permissions → Repository permissions → <b data-page-node-id="G1oKrA8jxtuFhQcKbPsVME">Contents</b> 选 <b data-page-node-id="gFEbXibgG1yvnJVGFZ8zyI">Read and write</b>；<br data-page-node-id="zawOmSmoMGwuftpBphf1f7">
-          5. Generate token，把 <code style="background:#fff3d9;border-radius:6px;padding:0 5px;" data-page-node-id="vit0OrOgPirLSJ25FQ92hM">github_pat_…</code> 复制粘贴到上面输入框，点「保存并测试」。<br data-page-node-id="FdwldCHa0BKMww5Jbw0mJg">
-          <b style="color:#c9184a;" data-page-node-id="BKJEdztGGar678TKLH01CN">令牌只保存在这台设备的浏览器里，不会上传、也不会写进页面源码</b>；担心泄露时随时去 GitHub Revoke 后重新生成一个。
-        </p>
-      </details>
     </div>
     <div class="data-card" data-page-node-id="u4rAeH8fUQEwwbh5VOioCm">
       <h3 data-page-node-id="8l4kN7oXQknBMM8bJ6rljE">📊 我的小成绩</h3>
